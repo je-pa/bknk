@@ -1,0 +1,41 @@
+
+# properties 면 더 귀찮게 적음
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: jieun0502@gmail.com
+    password: ungjwkbotqivwmkv
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  thymeleaf:
+    check-template-location: true
+    prefix: classpath:templates/
+    #    resources
+    suffix: .html
+    mode: HTML
+    cache: false
+  datasource:
+    url: jdbc:mysql://localhost:3308/bknk
+    username: root
+    password: koreait
+    driver-class-name: org.mariadb.jdbc.Driver
+  #    url를 보고 설정해주기 때문에 안줘도 상관은 없을것이다 랬는데 안된다
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 30MB
+      location: D:/springImg
+mybatis:
+  mapper-locations: mybatis-mapper/**/*.xml
+  type-aliases-package: com.koreait.bknk
+  # 덕분에 편하게적는다 mapper에?
+
+# 톰켓 포트 변경
+server:
+  port: 8090
+#  기본적으로 80으로 날아감

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<header th:fragment="header">
+    <nav>
+        <div class="header__left">
+            <a th:href="@{/main/home}">
+                <i class="fas fa-bus"></i>
+            </a>
+        </div>
+        <div class="header__center"></div>
+        <div class="header__right">
+            <ul class="menus">
+                <li><a th:href="@{/user/login}">로그인</a></li>
+            </ul>
+            <ul class="menus">
+                <li>
+                    <a th:href="@{/user/profile}" >
+                        <span>
+                            프로필
+                        </span>
+                    </a>
+                </li>
+                <li><a th:href="@{/}"><i class="fas fa-bell"></i></a></li>
+                <li><a th:href="@{/user/logout}">로그아웃</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+</html>
