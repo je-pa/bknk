@@ -1,0 +1,21 @@
+*{box-sizing: border-box;}
+html,body{margin: 0; padding: 0;}
+a{text-decoration: none; color: black; }
+ul,ol,li{list-style: none}
+header{ position: fixed; padding-left: 20px; padding-right: 20px; width: 100%;box-shadow: 0 4px 4px -4px #dfe6e9;}
+nav{ display: flex; height: 100%; width: 100%;}
+.header__left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.header__right {
+    flex: 1 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#wrap{ padding-top: 100px; min-width: 1190px;}
+#Container {width: 1130px;
+    padding: 20px 30px; margin: 0 auto;}
