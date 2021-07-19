@@ -4,14 +4,15 @@
 <header th:fragment="header">
     <nav>
         <div class="header__left">
-            <a th:href="@{/main/home}">
-                <i class="fas fa-bus"></i>
+            <a th:href="@{/}">
+                <i class="fas fa-bus"> BKNK</i>
             </a>
         </div>
         <div class="header__center"></div>
         <div class="header__right">
             <ul class="menus">
                 <li><a th:href="@{/user/login}">로그인</a></li>
+                <li><a th:href="@{/user/join}">회원가입</a></li>
             </ul>
             <ul class="menus">
                 <li>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koreait.facebook.user.UserMapper">
+    <insert id="join">
+        INSERT INTO t_user
+            (email, pw, nm, nick, authCd, provider)
+        VALUES
+            (#{email}, #{pw}, #{nm}, #{nick}, #{authCd}, #{provider})
+    </insert>
+    <select id="selLocalEmail" resultType="UserEntity">
+        SELECT email FROM t_user
+        WHERE provider = 'local'
+    </select>
+    <update id="auth">
+        UPDATE t_user
+        SET authCd = null
+        WHERE email = #{email} AND authCd = #{authCd}
+    </update>
+</mapper>

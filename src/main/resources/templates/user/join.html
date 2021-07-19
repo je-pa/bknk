@@ -4,10 +4,53 @@
       layout:decorator="basicLayout">
 <head><title>join</title></head>
 <th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/user/join.css}">
 </th:block>
 <th:block layout:fragment="js">
+    <script defer th:src="@{/js/user/join.js}"></script>
 </th:block>
 <th:block layout:fragment="content">
-    <div></div>
+    <div class="contW480">
+        <div class="logoCont">
+            <span class="logo"><i class="fas fa-bus"> BKNK</i></span>
+        </div>
+
+        <div>
+            <form id="joinFrm" th:action="@{join}" method="post" th:object="${userEntity}" onsubmit="return frmchk()">
+                <!--            id와 name 자동들어감-->
+                <div>
+                    <div><input type="email" th:field="*{email}" placeholder="이메일" autofocus required></div>
+                    <div><input type="password" th:field="*{pw}" placeholder="비밀번호"> </div>
+                    <div><input type="password" name="pwChk" placeholder="비밀번호 확인"> </div>
+                    <div><input type="text" th:field="*{nm}" placeholder="이름" > </div>
+                    <div><input type="text" th:field="*{nick}" placeholder="닉네임" > </div>
+                </div>
+
+                <div>
+                    <div id="chkFrmResult"></div>
+                    <input type="submit" class="btn" value="회원가입">
+                </div>
+            </form>
+        </div>
+
+        <div class="social-container">
+            <div> 간편 회원가입 :
+                <a class="social" th:href="@{/oauth2/authorization/naver}">네이버</a>
+                <a class="social" th:href="@{/oauth2/authorization/kakao}">카카오</a>
+                <a class="social" th:href="@{/oauth2/authorization/google}">구글</a>
+                <a class="social" th:href="@{/oauth2/authorization/facebook}">페이스북</a>
+            </div>
+        </div>
+    </div>
 </th:block>
 </html>
+
+<!--                <div>-->
+<!--                    선택항목-->
+<!--                    <div id="genderChk">-->
+<!--                        성별 :-->
+<!--                        <label>남<input type="radio" th:field="*{gender}" value="0"></label>-->
+<!--                        <label>여<input type="radio" th:field="*{gender}" value="1"></label>-->
+<!--                    </div>-->
+<!--                    <div><input type="tel" th:field="*{tel}" placeholder="전화번호"></div>-->
+<!--                </div>-->
