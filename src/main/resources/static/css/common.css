@@ -26,11 +26,13 @@ nav{ display: flex; height: 100%; width: 100%;}
 .Container {width: 1130px;
     padding: 20px 30px; margin: 0 auto; min-height:100%;}
 
-footer{ background-color:#fafafa; height: 80px; }
+footer{ background-color:#373737; height: 80px; color: #fafafa; }
 
 .btn{ background-color: #cfcfcf;}
 .btn:hover{ opacity: 70%;}
 .btn:active{ opacity: 90%; }
+
+.pointer{cursor: pointer;}
 
 .contW480{ width: 480px; margin: 0 auto; padding: 10px 30px; }
 

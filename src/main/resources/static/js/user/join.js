@@ -7,7 +7,7 @@ var chkFrmResultElem = document.querySelector('#chkFrmResult');
 function frmchk(){
     emailChkAjax(emailElem.value);
 
-    return false;
+    return true;
 }
 
 function emailChkAjax(email){

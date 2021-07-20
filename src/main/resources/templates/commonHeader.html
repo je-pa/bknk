@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
 <header th:fragment="header">
     <nav>
         <div class="header__left">
@@ -10,11 +11,11 @@
         </div>
         <div class="header__center"></div>
         <div class="header__right">
-            <ul class="menus">
+            <ul class="menus" sec:authorize="isAnonymous()">
                 <li><a th:href="@{/user/login}">로그인</a></li>
                 <li><a th:href="@{/user/join}">회원가입</a></li>
             </ul>
-            <ul class="menus">
+            <ul class="menus" sec:authorize="isAuthenticated()">
                 <li>
                     <a th:href="@{/user/profile}" >
                         <span>
