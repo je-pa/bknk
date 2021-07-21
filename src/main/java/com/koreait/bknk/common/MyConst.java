@@ -6,4 +6,5 @@ import org.springframework.stereotype.Component;
 public class MyConst {
     public final String LOCAL = "local";
     public final String SUBJECT = "[BKNK] 이메일 인증 확인 메일";
+    public final String RESULT = "result";
 }

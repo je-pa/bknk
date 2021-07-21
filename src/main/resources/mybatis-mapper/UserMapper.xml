@@ -23,4 +23,9 @@
         SET authCd = null
         WHERE email = #{email} AND authCd = #{authCd}
     </update>
+    <update id="updMainProfile">
+        UPDATE t_user
+        SET mainProfile = #{mainProfile}
+        WHERE iuser = ${iuser}
+    </update>
 </mapper>
