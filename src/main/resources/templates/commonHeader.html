@@ -9,24 +9,36 @@
                 <i class="fas fa-bus"> BKNK</i>
             </a>
         </div>
+
         <div class="header__center"></div>
+
         <div class="header__right">
             <ul class="menus" sec:authorize="isAnonymous()">
                 <li><a th:href="@{/user/login}">로그인</a></li>
                 <li><a th:href="@{/user/join}">회원가입</a></li>
             </ul>
-            <ul class="menus" sec:authorize="isAuthenticated()">
-                <li>
-                    <a th:href="@{/user/userFeed}" >
-                        <span>
-
-                        </span>
-                    </a>
-                </li>
-                <li><a th:href="@{/}"><i class="fas fa-bell"></i></a></li>
-                <li><a th:href="@{/user/logout}">로그아웃</a></li>
+            <ul class="menus" sec:authorize="isAuthenticated()" th:with="auth=${#authentication.getPrincipal().getUser()}">
+                <li><img class="profileImgBtn mainProfileImg profile wh30 pointer" th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}"></li>
             </ul>
         </div>
+
     </nav>
+    <div class="dropdown_menu">
+        <ul class="menus" sec:authorize="isAuthenticated()" th:with="auth=${#authentication.getPrincipal().getUser()}">
+            <li>
+                <a th:href="@{/{nick}(nick=${auth.nick})}" >
+                        <span>
+                            <span th:text="${auth.nm}"></span>
+                        </span>
+                </a>
+            </li>
+            <!--                <li><a th:href="@{/}"><i class="fas fa-bell"></i></a></li>-->
+            <li><a th:href="@{/user/edit}"><img class="mainProfileImg profile wh30" th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}"></a></li>
+            <!--                <li><a th:href="@{/{nick}(nick=${auth.nick})}">내 feed</a></li>-->
+            <li><a th:href="@{/{nick}/subscriptions(nick=${auth.nick})}">구독계정리스트</a></li>
+            <!--                <li><a th:href="@{/b/fav}">좋아요한 게시글</a></li>-->
+            <li><a th:href="@{/user/logout}">로그아웃</a></li>
+        </ul>
+    </div>
 </header>
 </html>

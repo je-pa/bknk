@@ -11,21 +11,21 @@ import lombok.*;
 public class UserEntity {
     private int iuser;
     private String provider;
-    private String servverID;
+    private String serverID;
     private String email;
+
     private String pw;
+
     private String nm;
     private String nick;
-
     private String gender;
     private String mainProfile;
-    private int bYear;
-    private int bMonth;
-    private int bDate;
+    private int birthY;
+    private int birthM;
+    private int birthD;
     private String tel;
 
     private String authCd;
-
     private String regdt;
 
     private int cntFollowing;

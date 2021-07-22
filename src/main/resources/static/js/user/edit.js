@@ -1,6 +1,8 @@
 let fileList = [];
 const selProfileImgElem = document.querySelector('#selProfileImg');
 const btnUploadElem = document.querySelector('#btnUpload');
+const mainProfileImgElemList = document.querySelectorAll('.mainProfileImg');
+
 // function frmProfileImg(){
 //     // console.log(profileImgElem.value);
 //     const formData = new FormData();
@@ -53,8 +55,27 @@ btnUploadElem.addEventListener('click', () => {
                     alert('메인프로필 변경 실패');
                     break;
                 case 1:
-                    alert('메인프로필 변경 성공');
+                    mainProfileImgElemList.forEach(item=>{
+                        item.src=`/pic/user/${myJson.loginUser.iuser}/${myJson.loginUser.mainProfile}`;
+                    })
                     break;
             }
         });
 })
+
+/********************* 비밀번호 변경 *************************/
+const modalElem = document.querySelector('#modProfileCont .modal');
+const passwordElem = document.querySelector('#modProfileCont .password');
+const modalCloseElem = document.querySelector('#modProfileCont .modal .modal_close');
+
+//모달창 띄우기 이벤트
+passwordElem.addEventListener('click', () => {
+    modalElem.classList.remove('hide');
+});
+//모달창 닫기
+if(modalCloseElem){
+    modalCloseElem.addEventListener('click', () => {
+        modalElem.classList.add('hide');
+        //  location.reload();
+    })
+}

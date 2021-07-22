@@ -10,31 +10,76 @@
     <script defer th:src="@{/js/user/edit.js}"></script>
 </th:block>
 <th:block layout:fragment="content">
-    <div class="contW480">
-        <div class="profileCont">
-<!--            th:onsubmit="return frmProfileImg()"-->
-<!--            <form id="formData">-->
-<!--                <input type="file" id="selProfileImg" name="profileImg" accept="image/*">-->
-<!--                <input type="submit" value="프로필 사진 바꾸기">-->
-<!--            </form>-->
-            <input type="file" id="selProfileImg" name="profileImg" accept="image/*">
+    <div class="contW480" th:with="auth=${#authentication.getPrincipal().getUser()}">
+        <div>프로필 편집</div>
+        <div>
+            <div><input type="file" id="selProfileImg" name="profileImg" accept="image/*"></div>
+            <img class="mainProfileImg profile wh200" th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}">
             <div><input type="button" id="btnUpload" value="등록" disabled></div>
         </div>
 
-        <div>
+        <div id="modProfileCont">
             <form id="editFrm" th:action="@{edit}" method="post" th:object="${userEntity}" onsubmit="return frmchk()">
                 <!--            id와 name 자동들어감-->
                 <div>
-                    <div><input type="text" th:field="*{nm}" placeholder="이름" > </div>
-                    <div><input type="text" th:field="*{nick}" placeholder="닉네임" > </div>
-                    <div><input type="password" th:field="*{pw}" placeholder="비밀번호 변경"> </div>
-                    <div><input type="password" name="pwChk" placeholder="비밀번호 확인"> </div>
+                    <div class="categoryItem"><aside>이름</aside> <input type="text" th:field="*{nm}"> </div>
+                    <div class="categoryItem"><aside>닉네임</aside><input type="text" th:field="*{nick}" > </div>
+                    <div class="categoryItem"><aside>성별</aside>
+                        <div>
+                            <select>
+                                <option value="none">선택</option>
+                                <option th:text="남자" th:value="1"></option>
+                                <option th:text="여자" th:value="2" selected></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="categoryItem"><aside>전화번호</aside><input type="text" th:field="*{tel}" > </div>
+                    <div class="categoryItem">
+                        <aside>생년월일</aside>
+                        <div>
+                            <select class="border-r">
+                                <option value="none">선택</option>
+                                <th:block th:each="n:${#numbers.sequence(1900,2025)}">
+                                    <option th:if="${n eq auth.birthY}"th:text="${n}" th:value="${n}" selected></option>
+                                    <option th:unless="${n eq auth.birthY}"th:text="${n}" th:value="${n}"></option>
+                                </th:block>
+                            </select>
+                            <select class="border-r">
+                                <option value="none">선택</option>
+                                <th:block th:each="n:${#numbers.sequence(1,12)}">
+                                    <option th:if="${n eq auth.birthM}"th:text="${n}" th:value="${n}" selected></option>
+                                    <option th:unless="${n eq auth.birthM}"th:text="${n}" th:value="${n}"></option>
+                                </th:block>
+                            </select>
+                            <select>
+                                <option value="none">선택</option>
+                                <th:block th:each="n:${#numbers.sequence(1,31)}">
+                                    <option th:if="${n eq auth.birthD}"th:text="${n}" th:value="${n}" selected></option>
+                                    <option th:unless="${n eq auth.birthD}"th:text="${n}" th:value="${n}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-
+                <div class="pointer password"><i class="fas fa-user-cog"></i> 비밀번호 변경</div>
                 <div>
                     <input type="submit" class="btn pointer" value="수정">
                 </div>
             </form>
+            <div class="modal hide">
+                <div>
+                    <div class="modal_close_parent"><div>비밀번호 변경</div><i class="modal_close fas fa-times"></i></div>
+
+                    <form th:action="@{edit}" method="post" th:object="${userEntity}" onsubmit="return frmchk()">
+                        <div class="categoryItem"><aside>이전 비밀번호</aside><input type="password" th:field="*{pw}"> </div>
+                        <div class="categoryItem"><aside>새 비밀번호</aside><input type="password" th:field="*{pw}"> </div>
+                        <div class="categoryItem"><aside>새 비밀번호 확인</aside><input type="password" name="pwChk"> </div>
+                        <div>
+                            <input type="submit" class="btn pointer" value="수정">
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </th:block>

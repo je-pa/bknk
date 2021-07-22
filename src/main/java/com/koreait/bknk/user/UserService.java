@@ -12,6 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class UserService {
     @Autowired private UserMapper mapper;
@@ -47,22 +50,30 @@ public class UserService {
        return mapper.auth(param);
     }
 
-    public int updMainProfile(MultipartFile[] profileImg) {
-        if(profileImg==null){return 0;}
+    public Map<String,Object> updMainProfile(MultipartFile profileImg) {
+        Map<String,Object> res = new HashMap<>();
+        res.put(myConst.RESULT,0);
+
+        UserEntity loginUser = auth.getLoginUser();
+
+        if(profileImg==null){return res;}
         int result = 0;
         UserEntity param = new UserEntity();
-        param.setIuser(auth.getLoginUserPk());
+        param.setIuser(loginUser.getIuser());
 
-        if(profileImg!=null && profileImg.length>0){
+        if(profileImg!=null){
             String target = "user/"+param.getIuser();
-            for(MultipartFile img : profileImg){
-                String saveFileNm = myFileUtils.transferTo(img, target);
-                if(saveFileNm != null){
-                    param.setMainProfile(saveFileNm);
-                    result = mapper.updMainProfile(param);
-                }
+            String saveFileNm = myFileUtils.transferTo(profileImg, target);
+            if(saveFileNm != null){
+                param.setMainProfile(saveFileNm);
+                result = mapper.updUser(param);
             }
         }
-        return result;
+        if(result==1){
+            loginUser.setMainProfile(param.getMainProfile());
+            res.put(myConst.RESULT,result);
+        }
+        res.put(myConst.LOGIN_USER,loginUser);
+        return res;
     }
 }

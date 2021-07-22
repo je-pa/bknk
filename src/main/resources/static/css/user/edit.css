@@ -1,0 +1,17 @@
+#modProfileCont input {
+    background-color: #eee;
+    border: none;
+    padding: 12px 15px;
+    margin: 8px auto;
+    width: 70%;
+}
+#modProfileCont .btn{ background-color: #cfcfcf; width: 100%;}
+
+.modal > div {width: 550px; background-color: #fafafa; border-radius: 10px; padding: 0 20px 20px 20px;}
+
+.password{text-align: center; padding: 5px 0; color: #1976d2; font-weight: bold;}
+.categoryItem {display: flex; width: 100%;}
+.categoryItem > aside {font-size: 15px; width: 30%;text-align: right; padding: 12px 15px; margin: 8px 0;}
+.categoryItem > div {width: 70%;margin: 8px auto; padding: 5px 0; display: flex; justify-content: space-between;}
+.categoryItem > div > select {vertical-align: middle; text-align-last: center; height: 100%; flex-grow: 1; border: none;background-color: #eee;}
+.categoryItem > div > .border-r{border-right: 1px solid #c7c7c7;}
