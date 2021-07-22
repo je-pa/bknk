@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="basicLayout">
+<head><title>회원정보수정</title></head>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/user/edit.css}">
+</th:block>
+<th:block layout:fragment="js">
+    <script defer th:src="@{/js/user/edit.js}"></script>
+</th:block>
+<th:block layout:fragment="content">
+    <div class="contW480">
+        <div class="profileCont">
+<!--            th:onsubmit="return frmProfileImg()"-->
+<!--            <form id="formData">-->
+<!--                <input type="file" id="selProfileImg" name="profileImg" accept="image/*">-->
+<!--                <input type="submit" value="프로필 사진 바꾸기">-->
+<!--            </form>-->
+            <input type="file" id="selProfileImg" name="profileImg" accept="image/*">
+            <div><input type="button" id="btnUpload" value="등록" disabled></div>
+        </div>
+
+        <div>
+            <form id="editFrm" th:action="@{edit}" method="post" th:object="${userEntity}" onsubmit="return frmchk()">
+                <!--            id와 name 자동들어감-->
+                <div>
+                    <div><input type="text" th:field="*{nm}" placeholder="이름" > </div>
+                    <div><input type="text" th:field="*{nick}" placeholder="닉네임" > </div>
+                    <div><input type="password" th:field="*{pw}" placeholder="비밀번호 변경"> </div>
+                    <div><input type="password" name="pwChk" placeholder="비밀번호 확인"> </div>
+                </div>
+
+                <div>
+                    <input type="submit" class="btn pointer" value="수정">
+                </div>
+            </form>
+        </div>
+    </div>
+</th:block>
+</html>
