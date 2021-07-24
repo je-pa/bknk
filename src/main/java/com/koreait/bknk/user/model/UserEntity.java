@@ -18,7 +18,7 @@ public class UserEntity {
 
     private String nm;
     private String nick;
-    private String gender;
+    private int gender;
     private String mainProfile;
     private int birthY;
     private int birthM;

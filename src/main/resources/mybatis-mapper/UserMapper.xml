@@ -14,14 +14,18 @@
           AND provider = #{provider}
           AND authCd IS NULL
     </select>
-    <select id="selIUser" resultType="UserEntity">
+    <select id="selLocalUser" resultType="UserEntity">
         SELECT * FROM t_user
-        WHERE iuser = #{iuser}
-          AND authCd IS NULL
+        WHERE email = #{email}
+          AND provider = #{provider}
     </select>
-    <select id="selLocalEmail" resultType="UserEntity">
-        SELECT email FROM t_user
-        WHERE provider = 'local'
+    <select id="chkNick" resultType="UserEntity">
+        SELECT nick FROM t_user
+        WHERE
+            <if test="iuser != ''">
+                iuser != #{iuser} AND
+            </if>
+        nick = #{nick}
     </select>
     <update id="auth">
         UPDATE t_user
@@ -36,34 +40,63 @@
     <update id="updUser">
         UPDATE t_user
         <set>
-            <if test="mainProfile != null and mainProfile != ''">
+            <if test="mainProfile != null">
                 mainProfile = #{mainProfile}
             </if>
-            <if test="pw != null and pw != ''">
+            <if test="pw != null">
                 pw = #{pw}
             </if>
-            <if test="nm != null and nm != ''">
+            <if test="nm != null">
                 nm = #{nm}
             </if>
-            <if test="nick != null and nick != ''">
+            <if test="nick != null">
                 nick = #{nick}
             </if>
-            <if test="gender != null and gender != ''">
+            <if test="gender != ''">
                 gender = #{gender}
             </if>
-            <if test="birthY != null and birthY != ''">
+            <if test="birthY != ''">
                 birthY = #{birthY}
             </if>
-            <if test="birthM != null and birthM != ''">
+            <if test="birthM != ''">
                 birthM = #{birthM}
             </if>
-            <if test="birthD != null and birthD != ''">
+            <if test="birthD != ''">
                 birthD = #{birthD}
             </if>
-            <if test="tel != null and tel != ''">
+            <if test="tel != null">
                 tel = #{tel}
             </if>
         </set>
         WHERE iuser = #{iuser}
     </update>
 </mapper>
+<!--<set>-->
+<!--<if test="mainProfile != null and mainProfile != ''">-->
+<!--    mainProfile = #{mainProfile}-->
+<!--</if>-->
+<!--<if test="pw != null and pw != ''">-->
+<!--    pw = #{pw}-->
+<!--</if>-->
+<!--<if test="nm != null and nm != ''">-->
+<!--    nm = #{nm}-->
+<!--</if>-->
+<!--<if test="nick != null and nick != ''">-->
+<!--    nick = #{nick}-->
+<!--</if>-->
+<!--<if test="gender != null and gender != ''">-->
+<!--    gender = #{gender}-->
+<!--</if>-->
+<!--<if test="birthY != null and birthY != ''">-->
+<!--    birthY = #{birthY}-->
+<!--</if>-->
+<!--<if test="birthM != null and birthM != ''">-->
+<!--    birthM = #{birthM}-->
+<!--</if>-->
+<!--<if test="birthD != null and birthD != ''">-->
+<!--    birthD = #{birthD}-->
+<!--</if>-->
+<!--<if test="tel != null and tel != ''">-->
+<!--    tel = #{tel}-->
+<!--</if>-->
+<!--</set>-->

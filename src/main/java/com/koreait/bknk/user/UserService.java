@@ -7,6 +7,7 @@ import com.koreait.bknk.common.MySecurityUtils;
 import com.koreait.bknk.security.IAuthenticationFacade;
 import com.koreait.bknk.security.UserDetailsServiceImpl;
 import com.koreait.bknk.user.model.UserEntity;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,23 +27,41 @@ public class UserService {
     @Autowired private IAuthenticationFacade auth;
     @Autowired private MyFileUtils myFileUtils;
 
-    public void join(UserEntity param) {
-        String authCd = secUtils.getRandomDigit(5);
-        param.setAuthCd(authCd);
-
-        String hashedPw = passwordEncoder.encode(param.getPw());
-        param.setPw(hashedPw);
-
+    public int join(UserEntity param) {
         param.setProvider(myConst.LOCAL);
+        UserEntity localUser = mapper.selLocalUser(param);
+        System.out.println(localUser);
 
-        int result = userDetailService.join(param);
+        int result = 0;
+        String authCd = "";
 
-        if(result==1){
-            String txt = String.format("안녕하세요! %s[%s]님.\n\n '인증하기'버튼을 클릭하여 이메일 인증을 완료해주세요.\n" +
-                            "<a href=\"http://localhost:8090/user/auth?email=%s&authCd=%s\">인증하기</a>"
-                    ,param.getNm(),param.getNick(), param.getEmail(),authCd);
+        if(localUser==null){
+            if(mapper.chkNick(param)!=null){
+                return 2;//2 : 사용할 수 없는 닉네임입니다. 다른 닉네임을 사용하세요.
+            }
+            authCd = secUtils.getRandomDigit(5);
+            param.setAuthCd(authCd);
+
+            String hashedPw = passwordEncoder.encode(param.getPw());
+            param.setPw(hashedPw);
+
+            result = userDetailService.join(param);
+        }else{
+            if(localUser.getAuthCd()==null){
+                return 0;//0 : 이미 가입한 이메일 입니다
+            }else{
+                result = 3;//3 : 이메일 인증을 하지 않은 이메일 입니다. 이메일 인증을 해주세요
+                BeanUtils.copyProperties(localUser,param);
+
+                System.out.println(param);
+            }
+        }
+
+        if(result==1 || result ==3){
+            String txt = email.makeTxt(param.getNm(),param.getNick(), param.getEmail(),param.getAuthCd());
             email.sendMimeMessage(param.getEmail(), myConst.SUBJECT, txt);
         }
+        return result; //1 : 이메일 인증을 해주세요
     }
 
     //이메일 인증
@@ -65,6 +84,7 @@ public class UserService {
             String target = "user/"+param.getIuser();
             String saveFileNm = myFileUtils.transferTo(profileImg, target);
             if(saveFileNm != null){
+                System.out.println(param);
                 param.setMainProfile(saveFileNm);
                 result = mapper.updUser(param);
             }
@@ -75,5 +95,22 @@ public class UserService {
         }
         res.put(myConst.LOGIN_USER,loginUser);
         return res;
+    }
+
+    public Integer delMainProfile() {
+        UserEntity loginUser = auth.getLoginUser();
+        UserEntity param = new UserEntity();
+        param.setIuser(loginUser.getIuser());
+        param.setMainProfile("");
+        int result = mapper.updUser(param);
+        if(result==1){
+            loginUser.setMainProfile(param.getMainProfile());
+        }
+        return result;
+    }
+
+    public int chkNick() {
+        int result = 0;
+        return result;
     }
 }

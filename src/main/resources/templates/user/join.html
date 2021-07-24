@@ -13,17 +13,18 @@
     <div class="contW480">
         <div class="logoCont">
             <span class="logo"><i class="fas fa-bus"> BKNK</i></span>
+            <div class="red" th:if="${param.result != null and param.result[0]=='2'}">사용할 수 없는 닉네임입니다. 다른 닉네임을 사용하세요.</div>
         </div>
 
-        <div>
-            <form id="joinFrm" th:action="@{join}" method="post" th:object="${userEntity}" onsubmit="return frmchk()">
+        <div class="loadingParent">
+            <form  id="joinFrm" th:action="@{join}" method="post" th:object="${userEntity}" onsubmit="return frmChk()">
                 <!--            id와 name 자동들어감-->
                 <div>
                     <div><input type="email" th:field="*{email}" placeholder="이메일" autofocus required></div>
-                    <div><input type="password" th:field="*{pw}" placeholder="비밀번호"> </div>
+                    <div><input type="password" th:field="*{pw}" placeholder="비밀번호" required> </div>
                     <div><input type="password" name="pwChk" placeholder="비밀번호 확인"> </div>
-                    <div><input type="text" th:field="*{nm}" placeholder="이름" > </div>
-                    <div><input type="text" th:field="*{nick}" placeholder="닉네임" > </div>
+                    <div><input type="text" th:field="*{nm}" placeholder="이름" required> </div>
+                    <div><input type="text" th:field="*{nick}" placeholder="닉네임" required> </div>
                 </div>
 
                 <div>
@@ -31,6 +32,7 @@
                     <input type="submit" class="btn pointer" value="회원가입">
                 </div>
             </form>
+            <div class="loading hide"><img th:src="@{/img/loading.gif}"></div>
         </div>
 
         <div class="social-container">
@@ -41,6 +43,7 @@
                 <a class="social" th:href="@{/oauth2/authorization/facebook}">페이스북</a>
             </div>
         </div>
+
     </div>
 </th:block>
 </html>

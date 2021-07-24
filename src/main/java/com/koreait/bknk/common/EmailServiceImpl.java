@@ -29,4 +29,10 @@ public class EmailServiceImpl implements EmailService{
             e.printStackTrace();
         }
     }
+    public String makeTxt(String nm, String nick, String email, String authCd){
+        String txt = String.format("안녕하세요! %s[%s]님.\n\n '인증하기'버튼을 클릭하여 이메일 인증을 완료해주세요.\n" +
+                        "<a href=\"http://localhost:8090/user/auth?email=%s&authCd=%s\">인증하기</a>"
+                ,nm,nick, email,authCd);
+        return txt;
+    }
 }
