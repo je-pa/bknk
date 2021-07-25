@@ -10,49 +10,63 @@
     <script defer th:src="@{/js/user/edit.js}"></script>
 </th:block>
 <th:block layout:fragment="content">
-    <div class="contW480" th:with="auth=${#authentication.getPrincipal().getUser()}">
-        <div>프로필 편집</div>
+    <div class="contW600 shadow" th:with="auth=${#authentication.getPrincipal().getUser()}">
+        <h1>프로필 편집</h1>
         <div>
             <div><input type="file" id="selProfileImg" name="profileImg" accept="image/*"></div>
-            <img class="mainProfileImg profile wh200" th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}">
+            <img th:unless="${auth.mainProfile == null || auth.mainProfile == ''}" id="btnMainImgDel" class="mainProfileImg profile wh200 pointer" th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}">
+            <img th:if="${auth.mainProfile == null || auth.mainProfile == ''}" class="mainProfileImg profile wh200" th:src="@{/img/profile.png}">
             <div><input type="button" id="btnUpload" value="등록" disabled></div>
         </div>
 
-        <div id="modProfileCont">
-            <form id="editFrm" th:action="@{edit}" method="post" th:object="${userEntity}" onsubmit="return frmchk()">
+        <div id="modProfileCont" th:object="${userEntity}">
+            <div class="categoryItem disabled"><aside>이메일</aside><input type="text" th:field="*{email}"disabled></div>
+<!--            이메일은 일단은 못바꾸게 막음 후에 ajax로 따로 처리하던지 할것-->
+            <form id="editFrm" th:action="@{edit}" method="post"  onsubmit="return profileFrmChk()">
                 <!--            id와 name 자동들어감-->
                 <div>
-                    <div class="categoryItem"><aside>이름</aside> <input type="text" th:field="*{nm}"> </div>
-                    <div class="categoryItem"><aside>닉네임</aside><input type="text" th:field="*{nick}" > </div>
+                    <div class="categoryItem"><aside>이름</aside> <input type="text" th:field="*{nm}" required> </div>
+                    <div class="categoryItem"><aside>닉네임</aside><input type="text" th:field="*{nick}" required> </div>
+                    <div id="chkNickAjax" class="red">aaaa</div>
                     <div class="categoryItem"><aside>성별</aside>
                         <div>
-                            <select>
-                                <option value="none">선택</option>
-                                <option th:text="남자" th:value="1"></option>
-                                <option th:text="여자" th:value="2" selected></option>
+                            <select th:field="*{gender}">
+                                <option value=0>선택</option>
+                                <th:block th:if="${auth.gender eq '1'}">
+                                    <option th:text="남자" th:value=1 selected></option>
+                                    <option th:text="여자" th:value=2></option>
+                                </th:block>
+                                <th:block th:if="${auth.gender eq '2'}">
+                                    <option th:text="남자" th:value=1></option>
+                                    <option th:text="여자" th:value=2 selected></option>
+                                </th:block>
+                                <th:block th:unless="${auth.gender eq '1' || auth.gender eq '2'}">
+                                    <option th:text="남자" th:value=1></option>
+                                    <option th:text="여자" th:value=2></option>
+                                </th:block>
                             </select>
                         </div>
                     </div>
-                    <div class="categoryItem"><aside>전화번호</aside><input type="text" th:field="*{tel}" > </div>
+                    <div class="categoryItem"><aside>전화번호</aside><input type="text" th:field="*{tel}" pattern="\d{3}-\d{3,4}-\d{4}" title="형식 : 000-0000-0000 또는 000-000-0000"> </div>
                     <div class="categoryItem">
                         <aside>생년월일</aside>
                         <div>
-                            <select class="border-r">
-                                <option value="none">선택</option>
+                            <select class="border-r" th:field="*{birthY}">
+                                <option value="0">선택</option>
                                 <th:block th:each="n:${#numbers.sequence(1900,2025)}">
                                     <option th:if="${n eq auth.birthY}"th:text="${n}" th:value="${n}" selected></option>
                                     <option th:unless="${n eq auth.birthY}"th:text="${n}" th:value="${n}"></option>
                                 </th:block>
                             </select>
-                            <select class="border-r">
-                                <option value="none">선택</option>
+                            <select class="border-r" th:field="*{birthM}">
+                                <option value="0">선택</option>
                                 <th:block th:each="n:${#numbers.sequence(1,12)}">
                                     <option th:if="${n eq auth.birthM}"th:text="${n}" th:value="${n}" selected></option>
                                     <option th:unless="${n eq auth.birthM}"th:text="${n}" th:value="${n}"></option>
                                 </th:block>
                             </select>
-                            <select>
-                                <option value="none">선택</option>
+                            <select th:field="*{birthD}">
+                                <option value="0">선택</option>
                                 <th:block th:each="n:${#numbers.sequence(1,31)}">
                                     <option th:if="${n eq auth.birthD}"th:text="${n}" th:value="${n}" selected></option>
                                     <option th:unless="${n eq auth.birthD}"th:text="${n}" th:value="${n}"></option>
@@ -63,10 +77,19 @@
                 </div>
                 <div class="pointer password"><i class="fas fa-user-cog"></i> 비밀번호 변경</div>
                 <div>
+                    <div class="red"></div>
                     <input type="submit" class="btn pointer" value="수정">
                 </div>
             </form>
-            <div class="modal hide">
+<!--프사지우기모달-->
+            <div id="profileImg-modal" class="modal hide">
+                <div>
+                    <div class="modal_close_parent"><div>현재 사진을 삭제하시겠습니까?</div><i class="modal_close fas fa-times"></i></div>
+                    <input type="button" id="btnDel" class="btn pointer" value="네">
+                </div>
+            </div>
+<!--비밀번호 모달-->
+            <div id="password-modal" class="modal hide">
                 <div>
                     <div class="modal_close_parent"><div>비밀번호 변경</div><i class="modal_close fas fa-times"></i></div>
 

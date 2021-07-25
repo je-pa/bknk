@@ -25,7 +25,7 @@
             <if test="iuser != ''">
                 iuser != #{iuser} AND
             </if>
-        nick = #{nick}
+        nick = #{nick} AND authCd IS NULL
     </select>
     <update id="auth">
         UPDATE t_user
@@ -46,10 +46,10 @@
             <if test="pw != null">
                 pw = #{pw}
             </if>
-            <if test="nm != null">
+            <if test="nm != null and nm != ''">
                 nm = #{nm}
             </if>
-            <if test="nick != null">
+            <if test="nick != null and nick != ''">
                 nick = #{nick}
             </if>
             <if test="gender != ''">

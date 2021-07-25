@@ -18,7 +18,10 @@
                 <li><a th:href="@{/user/join}">회원가입</a></li>
             </ul>
             <ul class="menus" sec:authorize="isAuthenticated()" th:with="auth=${#authentication.getPrincipal().getUser()}">
-                <li><img class="profileImgBtn mainProfileImg profile wh30 pointer" th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}"></li>
+                <li class="profileImgBtn">
+                    <img th:unless="${auth.mainProfile == null || auth.mainProfile == ''}" class="pointer mainProfileImg profile wh30" th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}">
+                    <img th:if="${auth.mainProfile == null || auth.mainProfile == ''}" class="pointer mainProfileImg profile wh30" th:src="@{/img/profile.png}">
+                </li>
             </ul>
         </div>
 
@@ -28,12 +31,17 @@
             <li>
                 <a th:href="@{/{nick}(nick=${auth.nick})}" >
                         <span>
-                            <span th:text="${auth.nm}"></span>
+                            <span th:text="${auth.nick}"></span>
                         </span>
                 </a>
             </li>
             <!--                <li><a th:href="@{/}"><i class="fas fa-bell"></i></a></li>-->
-            <li><a th:href="@{/user/edit}"><img class="mainProfileImg profile wh30" th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}"></a></li>
+            <li>
+                <a th:href="@{/user/edit}">
+                    <img th:unless="${auth.mainProfile == null || auth.mainProfile == ''}" class="mainProfileImg profile wh30" th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}">
+                    <img th:if="${auth.mainProfile == null || auth.mainProfile == ''}" class="mainProfileImg profile wh30" th:src="@{/img/profile.png}">
+                </a>
+            </li>
             <!--                <li><a th:href="@{/{nick}(nick=${auth.nick})}">내 feed</a></li>-->
             <li><a th:href="@{/{nick}/subscriptions(nick=${auth.nick})}">구독계정리스트</a></li>
             <!--                <li><a th:href="@{/b/fav}">좋아요한 게시글</a></li>-->

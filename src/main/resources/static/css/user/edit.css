@@ -1,5 +1,6 @@
 #modProfileCont input {
     background-color: #eee;
+    border-radius: 5px;
     border: none;
     padding: 12px 15px;
     margin: 8px auto;
@@ -15,3 +16,6 @@
 .categoryItem > div {width: 70%;margin: 8px auto; padding: 5px 0; display: flex; justify-content: space-between;}
 .categoryItem > div > select {vertical-align: middle; text-align-last: center; height: 100%; flex-grow: 1; border: none;background-color: #eee;}
 .categoryItem > div > .border-r{border-right: 1px solid #c7c7c7;}
+
+#modProfileCont .disabled > input{color: #6d6d6d; border: 1px solid #cfcfcf;}
+#chkNickAjax{ padding: 0; text-align: center;}

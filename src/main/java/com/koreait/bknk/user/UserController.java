@@ -65,10 +65,11 @@ public class UserController {
     }
 
     @ResponseBody
-    @PostMapping("/chkNick")
-    public Map<String, Integer> chkNick(){
+    @GetMapping("/chkNick")
+    public Map<String, Integer> chkNick(UserEntity param){
         Map<String, Integer> res = new HashMap<>();
-        res.put(myConst.RESULT,service.chkNick());
+        res.put(myConst.RESULT,service.chkNick(param));
+//        System.out.println(param.getNick());
         return res;
     }
 }

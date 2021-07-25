@@ -109,8 +109,12 @@ public class UserService {
         return result;
     }
 
-    public int chkNick() {
-        int result = 0;
+    public int chkNick(UserEntity param) {
+        param.setIuser(auth.getLoginUser().getIuser());
+        int result =0;
+        if(mapper.chkNick(param)==null){
+            result = 1;
+        }
         return result;
     }
 }
