@@ -11,6 +11,8 @@
 </th:block>
 <th:block layout:fragment="content">
     <div class="contW600 shadow" th:with="auth=${#authentication.getPrincipal().getUser()}">
+        <div th:if="${param.result != null and param.result[0] =='1'}" class="red">프로필이 저장되었습니다.</div>
+        <div th:if="${param.result != null and param.result[0] =='2'}" class="red">비밀번호가 변경되었습니다.</div>
         <h1>프로필 편집</h1>
         <div>
             <div><input type="file" id="selProfileImg" name="profileImg" accept="image/*"></div>
@@ -25,13 +27,13 @@
             <form id="editFrm" th:action="@{edit}" method="post"  onsubmit="return profileFrmChk()">
                 <!--            id와 name 자동들어감-->
                 <div>
-                    <div class="categoryItem"><aside>이름</aside> <input type="text" th:field="*{nm}" required> </div>
-                    <div class="categoryItem"><aside>닉네임</aside><input type="text" th:field="*{nick}" required> </div>
-                    <div id="chkNickAjax" class="red">aaaa</div>
+                    <div class="categoryItem"><aside>이름</aside> <input type="text" th:field="*{nm}" maxlength="10" required> </div>
+                    <div id="chkNick" class="red"></div>
+                    <div class="categoryItem"><aside>닉네임</aside><input type="text" th:field="*{nick}" maxlength="10" required> </div>
                     <div class="categoryItem"><aside>성별</aside>
                         <div>
                             <select th:field="*{gender}">
-                                <option value=0>선택</option>
+                                <option value="-1">선택</option>
                                 <th:block th:if="${auth.gender eq '1'}">
                                     <option th:text="남자" th:value=1 selected></option>
                                     <option th:text="여자" th:value=2></option>
@@ -52,21 +54,21 @@
                         <aside>생년월일</aside>
                         <div>
                             <select class="border-r" th:field="*{birthY}">
-                                <option value="0">선택</option>
+                                <option value="-1">선택</option>
                                 <th:block th:each="n:${#numbers.sequence(1900,2025)}">
                                     <option th:if="${n eq auth.birthY}"th:text="${n}" th:value="${n}" selected></option>
                                     <option th:unless="${n eq auth.birthY}"th:text="${n}" th:value="${n}"></option>
                                 </th:block>
                             </select>
                             <select class="border-r" th:field="*{birthM}">
-                                <option value="0">선택</option>
+                                <option value="-1">선택</option>
                                 <th:block th:each="n:${#numbers.sequence(1,12)}">
                                     <option th:if="${n eq auth.birthM}"th:text="${n}" th:value="${n}" selected></option>
                                     <option th:unless="${n eq auth.birthM}"th:text="${n}" th:value="${n}"></option>
                                 </th:block>
                             </select>
                             <select th:field="*{birthD}">
-                                <option value="0">선택</option>
+                                <option value="-1">선택</option>
                                 <th:block th:each="n:${#numbers.sequence(1,31)}">
                                     <option th:if="${n eq auth.birthD}"th:text="${n}" th:value="${n}" selected></option>
                                     <option th:unless="${n eq auth.birthD}"th:text="${n}" th:value="${n}"></option>
@@ -77,7 +79,7 @@
                 </div>
                 <div class="pointer password"><i class="fas fa-user-cog"></i> 비밀번호 변경</div>
                 <div>
-                    <div class="red"></div>
+                    <div id="chkProfileFrm" class="red"></div>
                     <input type="submit" class="btn pointer" value="수정">
                 </div>
             </form>
@@ -91,12 +93,13 @@
 <!--비밀번호 모달-->
             <div id="password-modal" class="modal hide">
                 <div>
-                    <div class="modal_close_parent"><div>비밀번호 변경</div><i class="modal_close fas fa-times"></i></div>
+                    <div id="pwEditFrm" class="modal_close_parent"><div>비밀번호 변경</div><i class="modal_close fas fa-times"></i></div>
 
-                    <form th:action="@{edit}" method="post" th:object="${userEntity}" onsubmit="return frmchk()">
-                        <div class="categoryItem"><aside>이전 비밀번호</aside><input type="password" th:field="*{pw}"> </div>
-                        <div class="categoryItem"><aside>새 비밀번호</aside><input type="password" th:field="*{pw}"> </div>
-                        <div class="categoryItem"><aside>새 비밀번호 확인</aside><input type="password" name="pwChk"> </div>
+                    <form th:action="@{edit}" method="post" th:object="${userEntity}" onsubmit="return pwFrmChk()">
+                        <div class="categoryItem"><aside>이전 비밀번호</aside><input type="password" name="oldPw" required> </div>
+                        <div class="categoryItem"><aside>새 비밀번호</aside><input type="password" th:field="*{pw}" required> </div>
+                        <div class="categoryItem"><aside>새 비밀번호 확인</aside><input type="password" name="pwChk" required> </div>
+                        <div id="chkOldPw" class="red"></div>
                         <div>
                             <input type="submit" class="btn pointer" value="수정">
                         </div>

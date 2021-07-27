@@ -50,6 +50,12 @@ public class UserController {
         System.out.println(param);
     }
 
+    @PostMapping("/edit")
+    public String edit(UserEntity param){
+        int result = service.edit(param);
+        return "redirect:edit?result="+result;//1 : 프로필이 저장되었습니다.
+    }
+
     @ResponseBody
     @PostMapping("/updMainProfile")
     public Map<String,Object> updMainProfile(MultipartFile[] profileImg){
@@ -65,10 +71,10 @@ public class UserController {
     }
 
     @ResponseBody
-    @GetMapping("/chkNick")
-    public Map<String, Integer> chkNick(UserEntity param){
+    @GetMapping("/chkUser")
+    public Map<String, Integer> chkUser(UserEntity param){
         Map<String, Integer> res = new HashMap<>();
-        res.put(myConst.RESULT,service.chkNick(param));
+        res.put(myConst.RESULT,service.chkUser(param));
 //        System.out.println(param.getNick());
         return res;
     }

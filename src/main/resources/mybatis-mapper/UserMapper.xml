@@ -25,47 +25,42 @@
             <if test="iuser != ''">
                 iuser != #{iuser} AND
             </if>
-        nick = #{nick} AND authCd IS NULL
+        nick = #{nick}
     </select>
     <update id="auth">
         UPDATE t_user
         SET authCd = null
         WHERE email = #{email} AND authCd = #{authCd}
     </update>
-    <update id="updMainProfile">
-        UPDATE t_user
-        SET mainProfile = #{mainProfile}
-        WHERE iuser = ${iuser}
-    </update>
     <update id="updUser">
         UPDATE t_user
         <set>
-            <if test="mainProfile != null">
-                mainProfile = #{mainProfile}
+            <if test="mainProfile != null ">
+                mainProfile = #{mainProfile},
             </if>
             <if test="pw != null">
-                pw = #{pw}
+                pw = #{pw},
             </if>
             <if test="nm != null and nm != ''">
-                nm = #{nm}
+                nm = #{nm},
             </if>
             <if test="nick != null and nick != ''">
-                nick = #{nick}
+                nick = #{nick},
             </if>
             <if test="gender != ''">
-                gender = #{gender}
+                gender = #{gender},
             </if>
             <if test="birthY != ''">
-                birthY = #{birthY}
+                birthY = #{birthY},
             </if>
             <if test="birthM != ''">
-                birthM = #{birthM}
+                birthM = #{birthM},
             </if>
             <if test="birthD != ''">
-                birthD = #{birthD}
+                birthD = #{birthD},
             </if>
             <if test="tel != null">
-                tel = #{tel}
+                tel = #{tel},
             </if>
         </set>
         WHERE iuser = #{iuser}

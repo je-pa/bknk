@@ -109,12 +109,42 @@ public class UserService {
         return result;
     }
 
-    public int chkNick(UserEntity param) {
-        param.setIuser(auth.getLoginUser().getIuser());
+    public int chkUser(UserEntity param) {
+        UserEntity loginUser = auth.getLoginUser();
+        param.setIuser(loginUser.getIuser());
         int result =0;
-        if(mapper.chkNick(param)==null){
+        if(param.getPw()!=null){
+            System.out.println(passwordEncoder.matches(param.getPw(),loginUser.getPw()));
+        }else if(param.getNick()!=null && mapper.chkNick(param)==null){
             result = 1;
         }
+        return result;
+    }
+
+    public int edit(UserEntity param) {
+        int result = 0;
+        UserEntity loginUser = auth.getLoginUser();
+        param.setIuser(loginUser.getIuser());
+
+        System.out.println("editParam : "+param);
+
+        if(param.getPw()!=null){
+            param.setPw(passwordEncoder.encode(param.getPw()));
+            if(mapper.updUser(param)==1){
+                result = 2;
+            }
+        }else{
+            result = mapper.updUser(param);
+
+            loginUser.setNm(param.getNm());
+            loginUser.setNick(param.getNick());
+            loginUser.setGender(param.getGender());
+            loginUser.setTel(param.getTel());
+            loginUser.setBirthY(param.getBirthY());
+            loginUser.setBirthM(param.getBirthM());
+            loginUser.setBirthD(param.getBirthD());
+        }
+
         return result;
     }
 }
