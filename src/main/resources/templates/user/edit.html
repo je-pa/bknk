@@ -93,15 +93,15 @@
 <!--비밀번호 모달-->
             <div id="password-modal" class="modal hide">
                 <div>
-                    <div id="pwEditFrm" class="modal_close_parent"><div>비밀번호 변경</div><i class="modal_close fas fa-times"></i></div>
+                    <div class="modal_close_parent"><div>비밀번호 변경</div><i class="modal_close fas fa-times"></i></div>
 
-                    <form th:action="@{edit}" method="post" th:object="${userEntity}" onsubmit="return pwFrmChk()">
-                        <div class="categoryItem"><aside>이전 비밀번호</aside><input type="password" name="oldPw" required> </div>
+                    <form id="pwEditFrm" th:action="@{edit}" method="post" th:object="${userEntity}" onsubmit="return pwFrmChk()">
+                        <div class="categoryItem"><aside>현재 비밀번호</aside><input type="password" name="oldPw" required> </div>
                         <div class="categoryItem"><aside>새 비밀번호</aside><input type="password" th:field="*{pw}" required> </div>
-                        <div class="categoryItem"><aside>새 비밀번호 확인</aside><input type="password" name="pwChk" required> </div>
-                        <div id="chkOldPw" class="red"></div>
+                        <div class="categoryItem"><aside>새 비밀번호 확인</aside><input type="password" name="chkPw" required> </div>
+                        <div id="chkPwResult" class="red"></div>
                         <div>
-                            <input type="submit" class="btn pointer" value="수정">
+                            <input type="submit" class="btn" value="수정">
                         </div>
                     </form>
                 </div>

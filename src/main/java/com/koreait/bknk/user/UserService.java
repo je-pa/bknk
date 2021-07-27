@@ -113,11 +113,12 @@ public class UserService {
         UserEntity loginUser = auth.getLoginUser();
         param.setIuser(loginUser.getIuser());
         int result =0;
-        if(param.getPw()!=null){
-            System.out.println(passwordEncoder.matches(param.getPw(),loginUser.getPw()));
+        if(param.getPw()!=null && passwordEncoder.matches(param.getPw(),loginUser.getPw())){
+            result =2;
         }else if(param.getNick()!=null && mapper.chkNick(param)==null){
             result = 1;
         }
+        System.out.println(result);
         return result;
     }
 

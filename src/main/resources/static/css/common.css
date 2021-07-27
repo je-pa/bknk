@@ -57,7 +57,11 @@ nav{ display: flex; height: 100%; width: 100%;}
 footer{ background-color:#303740; height: 80px; color: #fafafa; }
 
 .btn{ background-color: #cfcfcf; }
-.btn:hover{ opacity: 70%;}
+input[type="submit"]:disabled{
+    pointer-events: none;
+    color: #fafafa;
+}
+.btn:hover{ opacity: 70%; cursor: pointer;}
 .btn:active{ opacity: 90%; }
 
 .pointer{cursor: pointer;}

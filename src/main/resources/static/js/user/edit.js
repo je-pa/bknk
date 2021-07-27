@@ -154,13 +154,16 @@ function ajaxChkNick(nick){
 /********************* 비밀번호 변경 *************************/
 const pwEditFrmElem = document.querySelector('#pwEditFrm');
 const oldPwElem = pwEditFrmElem.oldPw;
-const pwElem =  pwEditFrmElem.pw;
+const chkPwElem = pwEditFrmElem.chkPw;
+const pwElem = pwEditFrmElem.pw;
 
-const chkOldPwElem = document.querySelector('#chkOldPw');
+const chkPwResultElem = document.querySelector('#chkPwResult');
 
 const passwordModalElem = document.querySelector('#password-modal');
 const passwordElem = document.querySelector('#modProfileCont .password');
 const passwordModalCloseElem = document.querySelector('#password-modal .modal_close');
+
+let ajaxResult = 0;
 
 //비밀번호 모달창 띄우기 이벤트
 passwordElem.addEventListener('click', () => {
@@ -176,35 +179,46 @@ if(passwordModalCloseElem){
 }
 
 function pwFrmChk(){
-    console.log(pw.value);
-    // console.log(oldPwElem.value);
-    // console.log(pwEditFrmElem.oldPw.value);
-    // console.log(pwEditFrmElem.pw);
-    // console.log(pwEditFrmElem.pw.value);
-    // console.log(pwEditFrmElem.pwChk.value);
-    // ajaxChkOldPw(pwEditFrmElem.oldPw.value);
+    chkPw();
+    if(ajaxResult !==2 && chkPwResultElem.textContent !== '비밀번호가 일치하지 않습니다.' && chkPwResultElem.textContent !== '비밀번호는 공백 입력이 불가능합니다.'){
+        chkPwResultElem.innerHTML='현재 비밀번호가 옳바르지 않습니다.';
+        return false;
+    }
+    if(ajaxResult ===2 && chkPwResultElem.textContent ==='현재 비밀번호가 옳바르지 않습니다.'){
+        chkPwResultElem.innerHTML='';
+        return false;
+    }
+    if(ajaxResult ===2 && (chkPwResultElem.textContent === null || chkPwResultElem.textContent === '')){
+        return true;
+    }
     return false;
-    // if(chkOldPwElem.textContent===''|| chkOldPwElem.textContent === null){
-    //     return false;
-    // }else {
-    //     chkOldPwElem.innerHTML = '.';
-    //     return false;
-    // }
 }
-
-function ajaxChkOldPw(oldPw){
+oldPwElem.addEventListener('keyup',ajaxChkOldPw);
+pwElem.addEventListener('keyup',chkPw);
+chkPwElem.addEventListener('keyup',chkPw);
+function chkPw(){
+    var space =/ /gi;
+    if(pw.value !== chkPwElem.value){
+        chkPwResultElem.innerHTML='비밀번호가 일치하지 않습니다.';
+    }else if(space.test(pw.value)){
+        chkPwResultElem.innerHTML='비밀번호는 공백 입력이 불가능합니다.';
+    }else {
+        chkPwResultElem.innerHTML='';
+    }
+}
+function ajaxChkOldPw(){
+    let oldPw = oldPwElem.value;
+    ajaxResult = 0;
     fetch(`chkUser?pw=${oldPw}`)
         .then(res => res.json())
         .then(myJson => {
-            // console.log(myJson.result);
             switch (myJson.result) {
                 case 0:
-                    chkOldPwElem.innerHTML='이전 비밀번호가 맞지 않습니다.';
+                    ajaxResult = 0;
                     break;
                 case 2:
-                    chkOldPwElem.innerHTML='';
+                    ajaxResult = 2;
                     break;
             }
         })
-
 }
