@@ -14,6 +14,12 @@
           AND provider = #{provider}
           AND authCd IS NULL
     </select>
+    <select id="selFeedUser" resultType="UserDomain">
+        SELECT nick, mainProfile, regdt
+        ,(SELECT COUNT(feedIuser) FROM t_user_subscribe WHERE feedIuser = #{feedIuser} AND subscriberIuser = #{loginIuser}) AS subscriber
+        FROM t_user
+        WHERE iuser = #{feedIuser}
+    </select>
     <select id="selLocalUser" resultType="UserEntity">
         SELECT * FROM t_user
         WHERE email = #{email}
@@ -66,32 +72,3 @@
         WHERE iuser = #{iuser}
     </update>
 </mapper>
-<!--<set>-->
-<!--<if test="mainProfile != null and mainProfile != ''">-->
-<!--    mainProfile = #{mainProfile}-->
-<!--</if>-->
-<!--<if test="pw != null and pw != ''">-->
-<!--    pw = #{pw}-->
-<!--</if>-->
-<!--<if test="nm != null and nm != ''">-->
-<!--    nm = #{nm}-->
-<!--</if>-->
-<!--<if test="nick != null and nick != ''">-->
-<!--    nick = #{nick}-->
-<!--</if>-->
-<!--<if test="gender != null and gender != ''">-->
-<!--    gender = #{gender}-->
-<!--</if>-->
-<!--<if test="birthY != null and birthY != ''">-->
-<!--    birthY = #{birthY}-->
-<!--</if>-->
-<!--<if test="birthM != null and birthM != ''">-->
-<!--    birthM = #{birthM}-->
-<!--</if>-->
-<!--<if test="birthD != null and birthD != ''">-->
-<!--    birthD = #{birthD}-->
-<!--</if>-->
-<!--<if test="tel != null and tel != ''">-->
-<!--    tel = #{tel}-->
-<!--</if>-->
-<!--</set>-->

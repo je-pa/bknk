@@ -180,6 +180,7 @@ if(passwordModalCloseElem){
 
 function pwFrmChk(){
     chkPw();
+    console.log(':::'+ajaxResult);
     if(ajaxResult !==2 && chkPwResultElem.textContent !== '비밀번호가 일치하지 않습니다.' && chkPwResultElem.textContent !== '비밀번호는 공백 입력이 불가능합니다.'){
         chkPwResultElem.innerHTML='현재 비밀번호가 옳바르지 않습니다.';
         return false;
@@ -189,7 +190,7 @@ function pwFrmChk(){
         return false;
     }
     if(ajaxResult ===2 && (chkPwResultElem.textContent === null || chkPwResultElem.textContent === '')){
-        return true;
+        return false;/////
     }
     return false;
 }
@@ -219,6 +220,6 @@ function ajaxChkOldPw(){
                 case 2:
                     ajaxResult = 2;
                     break;
-            }
+            }console.log(ajaxResult);
         })
 }

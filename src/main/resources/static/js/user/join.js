@@ -14,5 +14,5 @@ function emailChkAjax(email){
     console.log(email);
 }
 
-function hideLoading() { loadingElem.classList.add('hide');}
+// function hideLoading() { loadingElem.classList.add('hide');}
 function showLoading() { loadingElem.classList.remove('hide'); }
