@@ -29,7 +29,7 @@
     <div class="dropdown_menu">
         <ul class="menus" sec:authorize="isAuthenticated()" th:with="auth=${#authentication.getPrincipal().getUser()}">
             <li>
-                <a th:href="@{/{nick}(nick=${auth.nick})}" >
+                <a th:href="@{/{nick}/(nick=${auth.nick})}" >
                         <span>
                             <span th:text="${auth.nick}"></span>
                         </span>

@@ -26,9 +26,9 @@
           AND provider = #{provider}
     </select>
     <select id="chkNick" resultType="UserEntity">
-        SELECT nick FROM t_user
+        SELECT nick, iuser FROM t_user
         WHERE
-            <if test="iuser != ''">
+            <if test="iuser !=null and iuser != ''">
                 iuser != #{iuser} AND
             </if>
         nick = #{nick}

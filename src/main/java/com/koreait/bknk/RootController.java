@@ -14,9 +14,9 @@ public class RootController {
     @GetMapping("/")
     public String home(){ return "root/home";}
 
-    @GetMapping("/{nick}")
+    @GetMapping("/{nick}/")
     public String userFeed(@PathVariable String nick, Model model){
-        System.out.println(nick);
+        System.out.println("FEED : "+nick);
         model.addAttribute(myConst.NICK_USER, service.userFeed(nick));
         return "/root/userFeed";
     }

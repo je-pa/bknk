@@ -18,12 +18,10 @@ public class RootService {
     public UserDomain userFeed(String nick) {
         UserEntity feedUser = new UserEntity();
         feedUser.setNick(nick);
-        feedUser = userMapper.chkNick(feedUser);
         UserDTO param = new UserDTO();
+//        System.out.println("feed : "+feedUser);
 
-
-        param.setFeedIuser(feedUser.getIuser());
-        System.out.println("feed"+feedUser);
+        param.setFeedIuser(userMapper.chkNick(feedUser).getIuser());
         param.setLoginIuser(auth.getLoginUserPk());
         return userMapper.selFeedUser(param);
     }

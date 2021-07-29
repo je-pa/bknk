@@ -1,0 +1,3 @@
+.feed_header{ display: flex; width: 100%; height: 300px; padding-top: 30px;}
+.feed_header .feed_header_left{ width: 300px;}
+.feed_header .feed_header_left img{ display: block; margin: auto auto;}

@@ -5,10 +5,16 @@
       layout:decorator="basicLayout">
 <head><title th:text="${nickUser.nick}"></title></head>
 <th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/root/userFeed.css}">
 </th:block>
 <th:block layout:fragment="js">
 </th:block>
 <th:block layout:fragment="content">
-    <div class="Container">Feed</div>
+    <div class="contW935 shadow">
+        <div class="feed_header">
+            <div class="feed_header_left"><img class="mainProfileImg profile wh150" th:src="@{/img/profile.png}"></div>
+            <div><h1 th:text="${nickUser.nick}"></h1></div>
+        </div>
+    </div>
 </th:block>
 </html>
