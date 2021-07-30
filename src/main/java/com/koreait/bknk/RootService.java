@@ -16,12 +16,12 @@ public class RootService {
     @Autowired MyConst myConst;
 
     public UserDomain userFeed(String nick) {
-        UserEntity feedUser = new UserEntity();
-        feedUser.setNick(nick);
+        UserEntity feedUserParam = new UserEntity();
+        feedUserParam.setNick(nick);
         UserDTO param = new UserDTO();
 //        System.out.println("feed : "+feedUser);
 
-        param.setFeedIuser(userMapper.chkNick(feedUser).getIuser());
+        param.setFeedIuser(userMapper.chkNick(feedUserParam).getIuser());
         param.setLoginIuser(auth.getLoginUserPk());
         return userMapper.selFeedUser(param);
     }

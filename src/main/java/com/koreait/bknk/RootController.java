@@ -1,6 +1,7 @@
 package com.koreait.bknk;
 
 import com.koreait.bknk.common.MyConst;
+import com.koreait.bknk.user.model.UserDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,9 @@ public class RootController {
     @GetMapping("/{nick}/")
     public String userFeed(@PathVariable String nick, Model model){
         System.out.println("FEED : "+nick);
-        model.addAttribute(myConst.NICK_USER, service.userFeed(nick));
+        UserDomain feedUser = service.userFeed(nick);
+        System.out.println(" :"+feedUser);
+        model.addAttribute(myConst.FEED_USER, feedUser);
         return "/root/userFeed";
     }
 

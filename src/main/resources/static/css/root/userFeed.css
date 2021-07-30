@@ -1,3 +1,12 @@
-.feed_header{ display: flex; width: 100%; height: 300px; padding-top: 30px;}
-.feed_header .feed_header_left{ width: 300px;}
+.feed_header{ display: flex; width: 100%; height: 220px; border-bottom: 1px solid #cfcfcf;}
+.feed_header .feed_header_left{ width: 30%; min-width: 180px;}
 .feed_header .feed_header_left img{ display: block; margin: auto auto;}
+.feed_header div .btn{ border: none; width: 70px; height: 27px; font-weight: 400; color: #757575; background-color: #fdc2d7; border-radius: 7px; padding: 4px;}
+
+.feed_header .feed_header_right .cont_nick{ display: flex; align-items: center;}
+.feed_header .feed_header_right .cont_nick h2{ margin-right: 30px;}
+.feed_header .feed_header_right .cont_inform div{ font-weight: 300;}
+
+.feed_list{ flex-grow: 1;}
+
+#cancel_subscription-modal .btn { border-radius: 5px; margin: 8px auto; padding: 12px 15px; border: none; background-color: #cfcfcf; width: 100%;}

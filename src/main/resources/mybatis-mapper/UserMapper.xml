@@ -8,6 +8,12 @@
         VALUES
             (#{email}, #{pw}, #{nm}, #{nick}, #{authCd}, #{provider})
     </insert>
+    <insert id="subscriptions">
+        INSERT INTO t_user_subscribe
+            (feedIuser, subscriberIuser)
+        VALUES
+            (#{feedIUser}, #{loginIuser})
+    </insert>
     <select id="selUser" resultType="UserEntity">
         SELECT * FROM t_user
         WHERE email = #{email}
@@ -15,7 +21,7 @@
           AND authCd IS NULL
     </select>
     <select id="selFeedUser" resultType="UserDomain">
-        SELECT nick, mainProfile, regdt
+        SELECT iuser, nick, email, mainProfile, regdt
         ,(SELECT COUNT(feedIuser) FROM t_user_subscribe WHERE feedIuser = #{feedIuser} AND subscriberIuser = #{loginIuser}) AS subscriber
         FROM t_user
         WHERE iuser = #{feedIuser}

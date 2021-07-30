@@ -3,17 +3,43 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="basicLayout">
-<head><title th:text="${nickUser.nick}"></title></head>
+<head><title th:text="${feedUser.nick}"></title></head>
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/css/root/userFeed.css}">
 </th:block>
 <th:block layout:fragment="js">
+    <script defer th:src="@{/js/root/userFeed.js}"></script>
 </th:block>
 <th:block layout:fragment="content">
-    <div class="contW935 shadow">
+    <div id="feedUserConst" th:data="iuser=${feedUser.iuser}"></div>
+    <div class="contW935" th:with="auth=${#authentication.getPrincipal().getUser()}">
         <div class="feed_header">
-            <div class="feed_header_left"><img class="mainProfileImg profile wh150" th:src="@{/img/profile.png}"></div>
-            <div><h1 th:text="${nickUser.nick}"></h1></div>
+            <div class="feed_header_left">
+                <img th:unless="${feedUser.mainProfile == null || feedUser.mainProfile == ''}" class="mainProfileImg profile wh150" th:src="@{/pic/user/{iuser}/{img}(iuser=${feedUser.iuser},img=${feedUser.mainProfile})}">
+                <img th:if="${feedUser.mainProfile == null || feedUser.mainProfile == ''}" class="mainProfileImg profile wh150" th:src="@{/img/profile.png}">
+            </div>
+            <div class="feed_header_right">
+                <div class="cont_nick">
+                    <h2 th:text="${feedUser.nick}"></h2>
+                    <th:block th:if="${feedUser.iuser != auth.iuser}">
+                        <button th:if="${feedUser.subscriber == 0}" id="subscription" class="btn">구독하기</button>
+                        <button th:if="${feedUser.subscriber == 1}" id="cancel_subscription" class="btn">구독중</button>
+                    </th:block>
+                </div>
+                <div class="cont_inform">
+                    <div th:text="'등록일 : '+${feedUser.regdt}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="feed_list">
+<!--            여기에 리스트 뿌려-->
+        </div>
+        <!--구독취소모달-->
+        <div id="cancel_subscription-modal" class="modal hide">
+            <div>
+                <div class="modal_close_parent"><div>구독을 취소하시겠습니까?</div><i class="modal_close fas fa-times"></i></div>
+                <input type="button" id="btnDel" class="btn pointer" value="네">
+            </div>
         </div>
     </div>
 </th:block>

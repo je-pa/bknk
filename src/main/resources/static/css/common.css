@@ -1,5 +1,5 @@
-*{box-sizing: border-box;}
-html,body{margin: 0; padding: 0; height: 100%;}
+*{box-sizing: border-box; font-family: 'Noto Sans KR', sans-serif;}
+html,body{margin: 0; padding: 0; height: 100%; font-family: 'Noto Sans KR', sans-serif;}
 #container{display: flex; flex-direction: column; min-height: 100%;width: 100%;}
 section{flex:1; display: flex; flex-direction: column; background-color: #f5f5f5;}
 a{text-decoration: none; color: black; }
@@ -49,24 +49,24 @@ nav{ display: flex; height: 100%; width: 100%;}
 }
 
 /*#wrap{ padding-top: 100px; min-width: 1190px;}*/
-#wrap{ display: flex; flex-direction: column; padding-top: 95px; width: 100%; flex-grow: 1;}
+#wrap{ display: flex; flex-direction: column; padding-top: 50px; width: 100%; flex-grow: 1;}
 
 
 footer{ background-color:#303740; height: 80px; color: #fafafa; }
-.btn{ background-color: #cfcfcf; }
 
 input[type="submit"]:disabled{
     pointer-events: none;
     color: #fafafa;
 }
+.btn{ background-color: #cfcfcf; }
 .btn:hover{ opacity: 70%; cursor: pointer;}
 .btn:active{ opacity: 90%; }
 .pointer{cursor: pointer;}
 
 .Container {width: 1130px; margin: 0 auto 50px auto; padding: 20px 30px; min-height:100%;}
-.contW935{ width: 100%; max-width: 935px; margin: 0 auto; flex-grow: 1; background-color: #fafafa;}
+.contW935{ width: 100%; max-width: 935px; margin: 50px auto; flex-grow: 1; display: flex; flex-direction: column; /*background-color: #fafafa;*/}
 .contW480{ width: 100%; max-width: 480px; margin: 0 auto 50px; padding: 10px 30px; }
-.contW600{ width: 100%; max-width: 600px; margin: 0 auto 50px; padding: 10px 55px 20px 60px; }
+.contW600{ width: 100%; max-width: 600px; margin: 50px auto; padding: 10px 55px 20px 60px; }
 
 .profile { object-fit: cover; border-radius: 50%; border: 1px solid #8e8e8e;}
 
@@ -89,6 +89,7 @@ input[type="submit"]:disabled{
 
 .hide{display:none !important;}
 .modal{z-index: 100; position: fixed; top:0; left:0; height: 100%; width: 100%; background-color: rgba(0, 0, 0, 0.3);  display: flex; justify-content: center; align-items: center; }
+.modal > div {width: 550px; background-color: #fafafa; border-radius: 10px; padding: 0 20px 20px 20px;}
 .modal_close_parent{display: flex; height: 15%; justify-content: space-between; padding: 4% 1% 2% 1%; border-bottom: 1px solid #c7c7c7; margin-bottom: 10px;}
 .modal_close_parent > div {font-size: 120%; font-weight: bold;}
 .modal_close_parent .modal_close{color: #6d6d6d; font-size: 120%; cursor:pointer;}
