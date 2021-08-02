@@ -23,12 +23,12 @@
                     <div><input type="email" th:field="*{email}" placeholder="이메일" maxlength="50" autofocus required></div>
                     <div><input type="password" th:field="*{pw}" placeholder="비밀번호" required> </div>
                     <div><input type="password" name="pwChk" placeholder="비밀번호 확인"> </div>
+                    <div id="chkPwResult" class="red"></div>
                     <div><input type="text" th:field="*{nm}" placeholder="이름" maxlength="10" required> </div>
                     <div><input type="text" th:field="*{nick}" placeholder="닉네임" maxlength="10" required> </div>
                 </div>
-
                 <div>
-                    <div id="chkFrmResult"></div>
+                    <div id="chkFrm" class="red"></div>
                     <input type="submit" class="btn pointer" value="회원가입">
                 </div>
             </form>

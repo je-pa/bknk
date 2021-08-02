@@ -3,15 +3,13 @@ package com.koreait.bknk.user;
 import com.koreait.bknk.common.MyConst;
 import com.koreait.bknk.security.CustomUserPrincipal;
 import com.koreait.bknk.user.model.UserEntity;
+import com.koreait.bknk.user.model.UserSubEntity;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -76,6 +74,24 @@ public class UserController {
         Map<String, Integer> res = new HashMap<>();
         res.put(myConst.RESULT,service.chkUser(param));
 //        System.out.println(param.getNick());
+        return res;
+    }
+
+    @ResponseBody
+    @PostMapping("/subscription")
+    public Map<String, Integer> subscription(UserSubEntity param){
+        System.out.println("p"+param);
+        Map<String, Integer> res = new HashMap<>();
+        res.put(myConst.RESULT,service.subscription(param));
+        return res;
+    }
+
+    @ResponseBody
+    @DeleteMapping("/subscription")
+    public Map<String, Integer> cancelSubscription(UserSubEntity param){
+        System.out.println(param);
+        Map<String, Integer> res = new HashMap<>();
+        res.put(myConst.RESULT,service.cancelSubscription(param));
         return res;
     }
 }

@@ -8,12 +8,6 @@
         VALUES
             (#{email}, #{pw}, #{nm}, #{nick}, #{authCd}, #{provider})
     </insert>
-    <insert id="subscriptions">
-        INSERT INTO t_user_subscribe
-            (feedIuser, subscriberIuser)
-        VALUES
-            (#{feedIUser}, #{loginIuser})
-    </insert>
     <select id="selUser" resultType="UserEntity">
         SELECT * FROM t_user
         WHERE email = #{email}
@@ -77,4 +71,15 @@
         </set>
         WHERE iuser = #{iuser}
     </update>
+<!--    구독처리-->
+    <insert id="insSubscription">
+        INSERT INTO t_user_subscribe
+            (feedIuser, subscriberIuser)
+        VALUES
+            (#{feedIuser}, #{subscriberIuser})
+    </insert>
+    <delete id="delSubscription">
+        DELETE FROM t_user_subscribe
+        WHERE feedIuser = #{feedIuser} AND subscriberIuser = #{subscriberIuser}
+    </delete>
 </mapper>

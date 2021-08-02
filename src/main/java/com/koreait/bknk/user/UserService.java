@@ -7,6 +7,7 @@ import com.koreait.bknk.common.MySecurityUtils;
 import com.koreait.bknk.security.IAuthenticationFacade;
 import com.koreait.bknk.security.UserDetailsServiceImpl;
 import com.koreait.bknk.user.model.UserEntity;
+import com.koreait.bknk.user.model.UserSubEntity;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -147,5 +148,14 @@ public class UserService {
         }
 
         return result;
+    }
+    public int subscription(UserSubEntity param) {
+        param.setSubscriberIuser(auth.getLoginUserPk());
+        return mapper.insSubscription(param);
+    }
+
+    public int cancelSubscription(UserSubEntity param) {
+        param.setSubscriberIuser(auth.getLoginUserPk());
+        return mapper.delSubscription(param);
     }
 }
