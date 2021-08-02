@@ -42,8 +42,7 @@
                     <img th:if="${auth.mainProfile == null || auth.mainProfile == ''}" class="mainProfileImg profile wh30" th:src="@{/img/profile.png}">
                 </a>
             </li>
-            <!--                <li><a th:href="@{/{nick}(nick=${auth.nick})}">내 feed</a></li>-->
-            <li><a th:href="@{/{nick}/subscriptions(nick=${auth.nick})}">구독계정리스트</a></li>
+            <li><a th:href="@{/user/subscriptions}">구독계정리스트</a></li>
             <!--                <li><a th:href="@{/b/fav}">좋아요한 게시글</a></li>-->
             <li><a th:href="@{/user/logout}">로그아웃</a></li>
         </ul>

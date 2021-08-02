@@ -24,9 +24,5 @@ public class RootController {
         return "/root/userFeed";
     }
 
-    @GetMapping("/{nick}/subscriptions")
-    public String subscriptions(@PathVariable String nick){
-        System.out.println(nick);
-        return "/root/subscriptions";
-    }
+
 }

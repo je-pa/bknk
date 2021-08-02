@@ -64,7 +64,7 @@ input[type="submit"]:disabled{
 .pointer{cursor: pointer;}
 
 .Container {width: 1130px; margin: 0 auto 50px auto; padding: 20px 30px; min-height:100%;}
-.contW935{ width: 100%; max-width: 935px; margin: 50px auto; flex-grow: 1; display: flex; flex-direction: column; /*background-color: #fafafa;*/}
+.contW935{ width: 100%; max-width: 935px; margin: 50px auto; flex-grow: 1;  /*background-color: #fafafa;*/}
 .contW480{ width: 100%; max-width: 480px; margin: 0 auto 50px; padding: 10px 30px; }
 .contW600{ width: 100%; max-width: 600px; margin: 50px auto; padding: 10px 55px 20px 60px; }
 

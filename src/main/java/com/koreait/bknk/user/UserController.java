@@ -54,6 +54,9 @@ public class UserController {
         return "redirect:edit?result="+result;//1 : 프로필이 저장되었습니다.
     }
 
+    @GetMapping("/subscriptions")
+    public void subscriptions(){  }
+
     @ResponseBody
     @PostMapping("/updMainProfile")
     public Map<String,Object> updMainProfile(MultipartFile[] profileImg){
