@@ -22,8 +22,8 @@
                 <div class="cont_nick">
                     <h2 th:text="${feedUser.nick}"></h2>
                     <th:block th:if="${feedUser.iuser != auth.iuser}">
-                        <button th:if="${feedUser.subscriber == 0}" id="subscription" class="btn subscriptionBtn">구독하기</button>
-                        <button th:if="${feedUser.subscriber == 1}" id="subscription" class="btn">구독중</button>
+                        <button th:if="${feedUser.subscriber == 0}" id="subscription" class="subscriptionBtn DoSubscriptionBtn btn">구독하기</button>
+                        <button th:if="${feedUser.subscriber == 1}" id="subscription" class="subscriptionBtn btn">구독중</button>
                     </th:block>
                 </div>
                 <div class="cont_inform">

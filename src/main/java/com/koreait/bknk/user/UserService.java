@@ -6,6 +6,8 @@ import com.koreait.bknk.common.MyFileUtils;
 import com.koreait.bknk.common.MySecurityUtils;
 import com.koreait.bknk.security.IAuthenticationFacade;
 import com.koreait.bknk.security.UserDetailsServiceImpl;
+import com.koreait.bknk.user.model.UserDTO;
+import com.koreait.bknk.user.model.UserDomain;
 import com.koreait.bknk.user.model.UserEntity;
 import com.koreait.bknk.user.model.UserSubEntity;
 import org.springframework.beans.BeanUtils;
@@ -152,6 +154,12 @@ public class UserService {
     public int subscription(UserSubEntity param) {
         param.setSubscriberIuser(auth.getLoginUserPk());
         return mapper.insSubscription(param);
+    }
+
+    public UserDomain[] selSubscriptionList() {
+        UserDTO param = new UserDTO();
+        param.setLoginIuser(auth.getLoginUserPk());
+        return mapper.selSubscriptionList(param);
     }
 
     public int cancelSubscription(UserSubEntity param) {

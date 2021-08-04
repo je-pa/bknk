@@ -78,6 +78,16 @@
         VALUES
             (#{feedIuser}, #{subscriberIuser})
     </insert>
+    <select id="selSubscriptionList" resultType="UserDomain">
+        SELECT b.iuser, b.nick, b.mainProfile, CASE WHEN c.subscriberIuser IS null THEN 0 ELSE 1 END AS subscriber
+        FROM t_user_subscribe a
+         INNER JOIN t_user b
+            ON a.feedIuser=b.iuser
+         LEFT JOIN t_user_subscribe c
+           ON c.subscriberIuser = #{loginIuser}
+           AND c.feedIuser = a.feedIuser
+        WHERE a.subscriberIuser = #{loginIuser}
+    </select>
     <delete id="delSubscription">
         DELETE FROM t_user_subscribe
         WHERE feedIuser = #{feedIuser} AND subscriberIuser = #{subscriberIuser}

@@ -29,7 +29,7 @@
                 <div>
                     <div class="categoryItem"><aside>이름</aside> <input type="text" th:field="*{nm}" maxlength="10" required> </div>
                     <div id="chkNick" class="red"></div>
-                    <div class="categoryItem"><aside>닉네임</aside><input type="text" th:field="*{nick}" maxlength="10" required> </div>
+                    <div class="categoryItem"><aside>닉네임</aside><input type="text" th:field="*{nick}" maxlength="20" required> </div>
                     <div class="categoryItem"><aside>성별</aside>
                         <div>
                             <select th:field="*{gender}">
@@ -50,32 +50,33 @@
                         </div>
                     </div>
                     <div class="categoryItem"><aside>전화번호</aside><input type="text" th:field="*{tel}" pattern="\d{3}-\d{3,4}-\d{4}" title="형식 : 000-0000-0000 또는 000-000-0000"> </div>
-                    <div class="categoryItem">
-                        <aside>생년월일</aside>
-                        <div>
-                            <select class="border-r" th:field="*{birthY}">
-                                <option value="-1">선택</option>
-                                <th:block th:each="n:${#numbers.sequence(1900,2025)}">
-                                    <option th:if="${n eq auth.birthY}"th:text="${n}" th:value="${n}" selected></option>
-                                    <option th:unless="${n eq auth.birthY}"th:text="${n}" th:value="${n}"></option>
-                                </th:block>
-                            </select>
-                            <select class="border-r" th:field="*{birthM}">
-                                <option value="-1">선택</option>
-                                <th:block th:each="n:${#numbers.sequence(1,12)}">
-                                    <option th:if="${n eq auth.birthM}"th:text="${n}" th:value="${n}" selected></option>
-                                    <option th:unless="${n eq auth.birthM}"th:text="${n}" th:value="${n}"></option>
-                                </th:block>
-                            </select>
-                            <select th:field="*{birthD}">
-                                <option value="-1">선택</option>
-                                <th:block th:each="n:${#numbers.sequence(1,31)}">
-                                    <option th:if="${n eq auth.birthD}"th:text="${n}" th:value="${n}" selected></option>
-                                    <option th:unless="${n eq auth.birthD}"th:text="${n}" th:value="${n}"></option>
-                                </th:block>
-                            </select>
-                        </div>
-                    </div>
+                    <div class="categoryItem"><aside>생년월일</aside><input type="date" min="1900-01-01" max="2025-12-31"></div>
+<!--                    <div class="categoryItem">-->
+<!--                        <aside>생년월일</aside>-->
+<!--                        <div>-->
+<!--                            <select class="border-r" th:field="*{birthY}">-->
+<!--                                <option value="-1">선택</option>-->
+<!--                                <th:block th:each="n:${#numbers.sequence(1900,2025)}">-->
+<!--                                    <option th:if="${n eq auth.birthY}"th:text="${n}" th:value="${n}" selected></option>-->
+<!--                                    <option th:unless="${n eq auth.birthY}"th:text="${n}" th:value="${n}"></option>-->
+<!--                                </th:block>-->
+<!--                            </select>-->
+<!--                            <select class="border-r" th:field="*{birthM}">-->
+<!--                                <option value="-1">선택</option>-->
+<!--                                <th:block th:each="n:${#numbers.sequence(1,12)}">-->
+<!--                                    <option th:if="${n eq auth.birthM}"th:text="${n}" th:value="${n}" selected></option>-->
+<!--                                    <option th:unless="${n eq auth.birthM}"th:text="${n}" th:value="${n}"></option>-->
+<!--                                </th:block>-->
+<!--                            </select>-->
+<!--                            <select th:field="*{birthD}">-->
+<!--                                <option value="-1">선택</option>-->
+<!--                                <th:block th:each="n:${#numbers.sequence(1,31)}">-->
+<!--                                    <option th:if="${n eq auth.birthD}"th:text="${n}" th:value="${n}" selected></option>-->
+<!--                                    <option th:unless="${n eq auth.birthD}"th:text="${n}" th:value="${n}"></option>-->
+<!--                                </th:block>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
                 <div class="pointer password"><i class="fas fa-user-cog"></i> 비밀번호 변경</div>
                 <div>

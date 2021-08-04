@@ -3,6 +3,8 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
 <header th:fragment="header">
+    <span id="globalConst" sec:authorize="isAuthenticated()"  th:with="auth=${#authentication.getPrincipal().getUser()}"
+          th:data-iuser="${auth.iuser}" th:data-nick="${auth.nick}" th:data-writer-profile="${auth.mainProfile}"></span>
     <nav>
         <div class="header__left">
             <a th:href="@{/}">

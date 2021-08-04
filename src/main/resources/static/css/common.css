@@ -61,6 +61,10 @@ input[type="submit"]:disabled{
 .btn{ background-color: #cfcfcf; }
 .btn:hover{ opacity: 70%; cursor: pointer;}
 .btn:active{ opacity: 90%; }
+.subscriptionBtn{ border: none; width: 70px; height: 27px; font-weight: 400; color: #424242; background-color: #fdc2d7; border-radius: 7px;}
+.DoSubscriptionBtn {background-color: white; border: 2.5px solid #fdc2d7;}
+.DoSubscriptionBtn:hover{ background-color: #fdc2d7;}
+
 .pointer{cursor: pointer;}
 
 .Container {width: 1130px; margin: 0 auto 50px auto; padding: 20px 30px; min-height:100%;}

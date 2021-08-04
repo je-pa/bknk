@@ -4,7 +4,7 @@ const feedIuser =document.querySelector('#feedUserConst').dataset.iuser;
 const subscriptionElem = document.querySelector('#subscription');
 /********************* 구독하기 *************************/
 
-if(subscriptionElem.textContent=='구독하기'){
+if(subscriptionElem && subscriptionElem.textContent=='구독하기'){
     subscriptionElem.addEventListener('click',ajaxSubscription);
 }
 function ajaxSubscription(){
@@ -22,7 +22,7 @@ function ajaxSubscription(){
                         subscriptionElem.removeEventListener('click', ajaxSubscription);
                         subscriptionElem.addEventListener('click',clickHide);
                         subscriptionElem.innerText='구독중';
-                        subscriptionElem.classList.remove('subscriptionBtn');
+                        subscriptionElem.classList.remove('DoSubscriptionBtn');
                     }
 
                     break;
@@ -35,7 +35,7 @@ const cancelSubModalElem = document.querySelector('#cancel_subscription-modal');
 // const btnCancelSubElem = document.querySelector('#cancel_subscription');
 const cancelSubModalCloseElem = document.querySelector('#cancel_subscription-modal .modal_close');
 //프로필이미지 삭제 모달창 띄우기 이벤트
-if(subscriptionElem.textContent=='구독중'){
+if(subscriptionElem && subscriptionElem.textContent=='구독중'){
     subscriptionElem.addEventListener('click', clickHide);
 }
 function clickHide(){
@@ -70,7 +70,7 @@ function ajaxCancelSubscription(){
                         subscriptionElem.removeEventListener('click', clickHide);
                         subscriptionElem.addEventListener('click',ajaxSubscription);
                         subscriptionElem.innerText='구독하기';
-                        subscriptionElem.classList.add('subscriptionBtn');
+                        subscriptionElem.classList.add('DoSubscriptionBtn');
                     }
 
                     break;

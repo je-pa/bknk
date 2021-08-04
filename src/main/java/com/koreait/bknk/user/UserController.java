@@ -2,6 +2,7 @@ package com.koreait.bknk.user;
 
 import com.koreait.bknk.common.MyConst;
 import com.koreait.bknk.security.CustomUserPrincipal;
+import com.koreait.bknk.user.model.UserDomain;
 import com.koreait.bknk.user.model.UserEntity;
 import com.koreait.bknk.user.model.UserSubEntity;
 import org.springframework.beans.BeanUtils;
@@ -63,6 +64,7 @@ public class UserController {
         Map<String,Object> res = service.updMainProfile(profileImg[0]);
         return res;
     }
+
     @ResponseBody
     @GetMapping("/delMainProfile")
     public Map<String, Integer> delMainProfile(){
@@ -87,6 +89,12 @@ public class UserController {
         Map<String, Integer> res = new HashMap<>();
         res.put(myConst.RESULT,service.subscription(param));
         return res;
+    }
+
+    @ResponseBody
+    @GetMapping("/subscriptionList")
+    public UserDomain[] selSubscriptionList(){
+        return service.selSubscriptionList();
     }
 
     @ResponseBody

@@ -7,39 +7,26 @@
     <link rel="stylesheet" th:href="@{/css/user/subscriptions.css}">
 </th:block>
 <th:block layout:fragment="js">
+    <script defer th:src="@{/js/user/subscriptions.js}"></script>
 </th:block>
 <th:block layout:fragment="content">
-  <div class="contW935" th:with="auth=${#authentication.getPrincipal().getUser()}">
-      <div id="subscriptionCont_left">
-          <div th:text="${auth.nick}"></div>
-          <img th:unless="${auth.mainProfile == null || auth.mainProfile == ''}" class="pointer mainProfileImg profile wh150" th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}">
-          <img th:if="${auth.mainProfile == null || auth.mainProfile == ''}" class="pointer mainProfileImg profile wh150" th:src="@{/img/profile.png}">
-      </div>
-      <div id="subscriptionCont_right" class="shadow">
-          <div id="subscriptionCont_right_header">구독</div>
-          <div id="subscriptionListCont">
-              <div>aa1</div>
-              <div>aa2</div>
-              <div>aa3</div>
-              <div>aa4</div>
-              <div>aa5</div>
-              <div>aa6</div>
-              <div>aa7</div>
-              <div>aa8</div>
-              <div>aa9</div>
-              <div>aa0</div>
-              <div>aa1</div>
-              <div>aa2</div>
-              <div>aa3</div>
-              <div>aa4</div>
-              <div>aa5</div>
-              <div>aa6</div>
-              <div>aa7</div>
-              <div>aa8</div>
-              <div>aa9</div>
-              <div>aa</div>
-          </div>
-      </div>
-  </div>
+    <div class="contW935" th:with="auth=${#authentication.getPrincipal().getUser()}">
+        <div id="subscriptionCont_left">
+            <div th:text="${auth.nick}"></div>
+            <img th:unless="${auth.mainProfile == null || auth.mainProfile == ''}" class="pointer mainProfileImg profile wh150" th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}">
+            <img th:if="${auth.mainProfile == null || auth.mainProfile == ''}" class="pointer mainProfileImg profile wh150" th:src="@{/img/profile.png}">
+        </div>
+        <div id="subscriptionCont_right" class="shadow">
+            <div id="subscriptionCont_right_header">구독</div>
+            <div id="subscriptionListCont"></div>
+        </div>
+    </div>
+    <!--구독취소모달-->
+    <div id="cancel_subscription-modal" class="modal hide">
+        <div>
+            <div class="modal_close_parent"><div>구독을 취소하시겠습니까?</div><i class="modal_close fas fa-times"></i></div>
+            <input type="button" id="btnCancel" class="btn pointer" value="네">
+        </div>
+    </div>
 </th:block>
 </html>

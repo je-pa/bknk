@@ -17,5 +17,6 @@ public interface UserMapper {
     int updUser(UserEntity param);
 
     int insSubscription(UserSubEntity param);
+    UserDomain[] selSubscriptionList(UserDTO param);
     int delSubscription(UserSubEntity param);
 }

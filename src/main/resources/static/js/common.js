@@ -5,3 +5,9 @@ if(profileImgBtnElem){
         dropdownMenuElem.classList.toggle('active');
     });
 }
+
+function moveToProfile(nick){
+    console.log(nick);
+    location.href=`/${nick}/`;
+}
+
