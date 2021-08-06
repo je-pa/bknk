@@ -48,12 +48,12 @@ function makeSubscriptionList(data){
         }else{
             mainProfileImg.src=`/pic/user/${item.iuser}/${item.mainProfile}`;
         }
-        mainProfileImg.addEventListener('click',()=>{moveToProfile(item.nick);})
+        mainProfileImg.addEventListener('click',()=>{moveToFeed(item.nick);})
         const nickDiv = document.createElement('div');
         const nickSpan = document.createElement('span');
         nickSpan.classList.add('pointer');
         nickSpan.innerHTML=`${item.nick}`;
-        nickSpan.addEventListener('click',()=>{moveToProfile(item.nick);})
+        nickSpan.addEventListener('click',()=>{moveToFeed(item.nick);})
         nickDiv.append(nickSpan);
 
         subscriptionItem_leftDiv.append(mainProfileImg);
@@ -64,16 +64,13 @@ function makeSubscriptionList(data){
         subscription_Button.classList.add('subscriptionBtn','btn');
         if(item.subscriber == 1) {
             subscription_Button.innerHTML = '구독중';
-            subscription_Button.addEventListener('click', clickHide, once);
+            subscription_Button.addEventListener('click', ()=>createCancelSubscriptionModal(subscription_Button, item.iuser, contW935Elem), once);
         }else{
             subscription_Button.innerHTML = '구독하기';
             subscription_Button.classList.add('DoSubscriptionBtn');
-            subscription_Button.addEventListener('click',()=>ajaxSubscription(subscription_Button,item.iuser), once);
+            subscription_Button.addEventListener('click',()=>ajaxSubscription(subscription_Button,item.iuser,contW935Elem), once);
         }
-        const btnCancelElem = document.querySelector('.btnCancel');
-        if(btnCancelElem){
-            btnCancelElem.addEventListener('click', ()=>ajaxCancelSubscription(subscription_Button,item.iuser));
-        }
+
         subscriptionItem_rightDiv.append(subscription_Button);
 
         subscriptionListCont.append(subscriptionItem_contDiv);

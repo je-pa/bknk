@@ -53,17 +53,14 @@
             <if test="nick != null and nick != ''">
                 nick = #{nick},
             </if>
-            <if test="gender != ''">
+            <if test="gender != null">
                 gender = #{gender},
             </if>
-            <if test="birthY != ''">
-                birthY = #{birthY},
+            <if test="birth != null and birth != ''">
+                birth = #{birth},
             </if>
-            <if test="birthM != ''">
-                birthM = #{birthM},
-            </if>
-            <if test="birthD != ''">
-                birthD = #{birthD},
+            <if test="birth == ''">
+                birth = null,
             </if>
             <if test="tel != null">
                 tel = #{tel},

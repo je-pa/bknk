@@ -144,9 +144,9 @@ public class UserService {
             loginUser.setNick(param.getNick());
             loginUser.setGender(param.getGender());
             loginUser.setTel(param.getTel());
-            loginUser.setBirthY(param.getBirthY());
-            loginUser.setBirthM(param.getBirthM());
-            loginUser.setBirthD(param.getBirthD());
+            loginUser.setBirth(param.getBirth());
+            loginUser.setBirth(param.getBirth());
+            loginUser.setBirth(param.getBirth());
         }
 
         return result;

@@ -1,26 +1,18 @@
 
 const feedIuser =document.querySelector('#feedUserConst').dataset.iuser;
 const subscriptionElem = document.querySelector('#subscription');
-
+const FeedCont = document.querySelector('.contW935');
 /********************* 구독하기 *************************/
 
 if(subscriptionElem && subscriptionElem.textContent=='구독하기'){
-    subscriptionElem.addEventListener('click',()=>ajaxSubscription(subscriptionElem,feedIuser), once);
+    subscriptionElem.addEventListener('click',()=>ajaxSubscription(subscriptionElem,feedIuser, FeedCont), once);
 }
 
 /********************* 구독취소 *************************/
-// const btnCancelSubElem = document.querySelector('#cancel_subscription');
-//프로필이미지 삭제 모달창 띄우기 이벤트
+//구독취소 모달창 띄우기 이벤트
 if(subscriptionElem && subscriptionElem.textContent=='구독중'){
-    subscriptionElem.addEventListener('click', clickHide, once);
+    subscriptionElem.addEventListener('click', ()=>createCancelSubscriptionModal(subscriptionElem, feedIuser, FeedCont), once);
 }
-
-const btnCancelElem = document.querySelector('#btnCancel');
-if(btnCancelElem){
-    btnCancelElem.addEventListener('click', ()=>ajaxCancelSubscription(subscriptionElem,feedIuser));
-}
-
-
 
 /******대비*******/
 //

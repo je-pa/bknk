@@ -20,9 +20,7 @@ public class UserEntity {
     private String nick;
     private int gender;
     private String mainProfile;
-    private int birthY;
-    private int birthM;
-    private int birthD;
+    private String birth;
     private String tel;
 
     private String authCd;

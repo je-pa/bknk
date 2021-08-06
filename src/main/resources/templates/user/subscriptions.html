@@ -14,9 +14,9 @@
 <th:block layout:fragment="content">
     <div class="contW935" th:with="auth=${#authentication.getPrincipal().getUser()}">
         <div id="subscriptionCont_left">
-            <div th:text="${auth.nick}"></div>
-            <img th:unless="${auth.mainProfile == null || auth.mainProfile == ''}" class="pointer mainProfileImg profile wh150" th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}">
-            <img th:if="${auth.mainProfile == null || auth.mainProfile == ''}" class="pointer mainProfileImg profile wh150" th:src="@{/img/profile.png}">
+            <div th:text="${auth.nick}" class="pointer" th:onclick="'location.href=\''+ @{/{nick}/(nick=${auth.nick})} + '\''"></div>
+            <img th:unless="${auth.mainProfile == null || auth.mainProfile == ''}" class="pointer mainProfileImg profile wh150" th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}" th:onclick="'location.href=\''+ @{/{nick}/(nick=${auth.nick})} + '\''">
+            <img th:if="${auth.mainProfile == null || auth.mainProfile == ''}" class="pointer mainProfileImg profile wh150" th:src="@{/img/profile.png}" th:onclick="'location.href=\''+ @{/{nick}/(nick=${auth.nick})} + '\''">
         </div>
         <div id="subscriptionCont_right" class="shadow">
             <div id="subscriptionCont_right_header">구독</div>
@@ -24,11 +24,5 @@
         </div>
     </div>
     <!--구독취소모달-->
-    <div class="cancel_subscription-modal modal hide">
-        <div>
-            <div class="modal_close_parent"><div>구독을 취소하시겠습니까?</div><i class="modal_close fas fa-times"></i></div>
-            <input type="button" class="btnCancel btn pointer" value="네">
-        </div>
-    </div>
 </th:block>
 </html>

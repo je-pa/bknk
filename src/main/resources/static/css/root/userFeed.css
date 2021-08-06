@@ -11,4 +11,4 @@
 
 .feed_list{ flex-grow: 1;}
 
-#cancel_subscription-modal .btn { border-radius: 5px; margin: 8px auto; padding: 12px 15px; border: none; background-color: #cfcfcf; width: 100%;}
+.cancel_subscription-modal .btn { border-radius: 5px; margin: 8px auto; padding: 12px 15px; border: none; background-color: #cfcfcf; width: 100%;}

@@ -9,7 +9,7 @@ if(profileImgBtnElem){
     });
 }
 
-function moveToProfile(nick){
+function moveToFeed(nick){
     console.log(nick);
     location.href=`/${nick}/`;
 }
