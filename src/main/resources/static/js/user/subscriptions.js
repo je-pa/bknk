@@ -1,4 +1,5 @@
 const subscriptionListCont = document.querySelector('#subscriptionListCont');
+const contW935Elem = document.querySelector('.contW935');
 
 function getSubscriptionList(){
     fetch('subscriptionList')
@@ -13,19 +14,19 @@ function makeSubscriptionList(data){
     if(data.length == 0 ){return;}
     for(let i=0; i<data.length;i++){
         const item = data[i];
-        // <div className="subscriptionItemCont">
-        //     <div className="subscriptionItem_left">
-        //         <img th:unless="${auth.mainProfile == null || auth.mainProfile == ''}"
-        //              className="pointer mainProfileImg profile wh50"
-        //              th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}">
-        //             <img th:if="${auth.mainProfile == null || auth.mainProfile == ''}"
-        //                  className="pointer mainProfileImg profile wh50" th:src="@{/img/profile.png}">
-        //                 <div><span th:text="${auth.nick}" className="pointer"></span></div>
-        //     </div>
-        //     <div className="subscriptionItem_right">
-        //         <button className="subscriptionBtn btn">구독버튼</button>
-        //     </div>
-        // </div>
+            // <div className="subscriptionItemCont">
+            //     <div className="subscriptionItem_left">
+            //         <img th:unless="${auth.mainProfile == null || auth.mainProfile == ''}"
+            //              className="pointer mainProfileImg profile wh50"
+            //              th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}">
+            //             <img th:if="${auth.mainProfile == null || auth.mainProfile == ''}"
+            //                  className="pointer mainProfileImg profile wh50" th:src="@{/img/profile.png}">
+            //                 <div><span th:text="${auth.nick}" className="pointer"></span></div>
+            //     </div>
+            //     <div className="subscriptionItem_right">
+            //         <button className="subscriptionBtn btn">구독버튼</button>
+            //     </div>
+            // </div>
         /******************** Item시작 ************************/
         const subscriptionItem_contDiv = document.createElement('div');
         subscriptionItem_contDiv.classList.add('subscriptionItemCont');
@@ -63,8 +64,15 @@ function makeSubscriptionList(data){
         subscription_Button.classList.add('subscriptionBtn','btn');
         if(item.subscriber == 1) {
             subscription_Button.innerHTML = '구독중';
+            subscription_Button.addEventListener('click', clickHide, once);
         }else{
             subscription_Button.innerHTML = '구독하기';
+            subscription_Button.classList.add('DoSubscriptionBtn');
+            subscription_Button.addEventListener('click',()=>ajaxSubscription(subscription_Button,item.iuser), once);
+        }
+        const btnCancelElem = document.querySelector('.btnCancel');
+        if(btnCancelElem){
+            btnCancelElem.addEventListener('click', ()=>ajaxCancelSubscription(subscription_Button,item.iuser));
         }
         subscriptionItem_rightDiv.append(subscription_Button);
 
@@ -74,4 +82,3 @@ function makeSubscriptionList(data){
 }
 
 getSubscriptionList();
-
