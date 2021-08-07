@@ -156,8 +156,7 @@ public class UserService {
         return mapper.insSubscription(param);
     }
 
-    public UserDomain[] selSubscriptionList() {
-        UserDTO param = new UserDTO();
+    public UserDomain[] selSubscriptionList(UserDTO param) {
         param.setLoginIuser(auth.getLoginUserPk());
         return mapper.selSubscriptionList(param);
     }

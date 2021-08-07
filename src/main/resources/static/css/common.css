@@ -21,7 +21,7 @@ nav{ display: flex; height: 100%; width: 100%; align-items: center;}
 .header__center{
     display: flex;
     justify-content: space-between;
-    flex: 12 0;
+    flex: 1 0;
     padding-left: 50px;
 }
 .header__center input{
@@ -37,8 +37,9 @@ nav{ display: flex; height: 100%; width: 100%; align-items: center;}
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding-right: 15px;
 }
+.header__right .menus {display: flex;}
+.header__right .menus li{ padding-right: 15px;}
 .dropdown_menu{
     display: none;
     width: 180px;

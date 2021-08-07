@@ -2,6 +2,7 @@ package com.koreait.bknk.user;
 
 import com.koreait.bknk.common.MyConst;
 import com.koreait.bknk.security.CustomUserPrincipal;
+import com.koreait.bknk.user.model.UserDTO;
 import com.koreait.bknk.user.model.UserDomain;
 import com.koreait.bknk.user.model.UserEntity;
 import com.koreait.bknk.user.model.UserSubEntity;
@@ -93,8 +94,8 @@ public class UserController {
 
     @ResponseBody
     @GetMapping("/subscriptionList")
-    public UserDomain[] selSubscriptionList(){
-        return service.selSubscriptionList();
+    public UserDomain[] selSubscriptionList(UserDTO param){
+        return service.selSubscriptionList(param);
     }
 
     @ResponseBody

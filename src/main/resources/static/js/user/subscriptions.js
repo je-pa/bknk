@@ -1,11 +1,15 @@
 const subscriptionListCont = document.querySelector('#subscriptionListCont');
 const contW935Elem = document.querySelector('.contW935');
+let length = 0;
+let currentPage = 0;
+const limit = 10;
 
-function getSubscriptionList(){
-    fetch('subscriptionList')
+function getSubscriptionList(page){
+    fetch(`subscriptionList?page=${page}&limit=${limit}`)
         .then(res=>res.json())
         .then(myJson =>{
             console.log(myJson);
+            length = myJson.length;
             makeSubscriptionList(myJson);
         })
 }
@@ -77,5 +81,31 @@ function makeSubscriptionList(data){
     }
 
 }
+const listCont = document.querySelector('#subscriptionListCont');
 
-getSubscriptionList();
+function scrollInfinity(target){
+    target.addEventListener('scroll',()=>{
+        if(target.scrollTop + target.clientHeight >= target.scrollHeight - 5 && length === limit){
+            length = 0;
+            getSubscriptionList(++currentPage);
+        }
+    })
+}
+function scrollInfinity2(target){
+    target.addEventListener('scroll',()=>{
+        const{
+            scrollTop,
+            clientHeight,
+            scrollHeight
+        } = target;
+
+        if(scrollTop + clientHeight >= scrollHeight - 5 && length === limit){
+            length = 0;
+            getSubscriptionList(++currentPage);
+        }
+    })
+}
+
+getSubscriptionList(1);
+// scrollInfinity(listCont);
+scrollInfinity2(listCont);

@@ -84,6 +84,8 @@
            ON c.subscriberIuser = #{loginIuser}
            AND c.feedIuser = a.feedIuser
         WHERE a.subscriberIuser = #{loginIuser}
+        ORDER BY a.regdt
+        LIMIT #{startIdx}, #{limit}
     </select>
     <delete id="delSubscription">
         DELETE FROM t_user_subscribe
