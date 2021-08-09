@@ -5,12 +5,16 @@ let currentPage = 0;
 const limit = 10;
 
 function getSubscriptionList(page){
+    createLoading();
     fetch(`subscriptionList?page=${page}&limit=${limit}`)
         .then(res=>res.json())
         .then(myJson =>{
             console.log(myJson);
-            length = myJson.length;
-            makeSubscriptionList(myJson);
+            setTimeout(()=>{
+                length = myJson.length;
+                removeLoading();
+                makeSubscriptionList(myJson);
+            },800);
         })
 }
 
@@ -83,16 +87,17 @@ function makeSubscriptionList(data){
 }
 const listCont = document.querySelector('#subscriptionListCont');
 
-function scrollInfinity(target){
-    target.addEventListener('scroll',()=>{
-        if(target.scrollTop + target.clientHeight >= target.scrollHeight - 5 && length === limit){
-            length = 0;
-            getSubscriptionList(++currentPage);
-        }
-    })
-}
+// function scrollInfinity(target){
+//     target.addEventListener('scroll',()=>{
+//         if(target.scrollTop + target.clientHeight >= target.scrollHeight - 5 && length === limit){
+//             length = 0;
+//             getSubscriptionList(++currentPage);
+//         }
+//     })
+// }
 function scrollInfinity2(target){
     target.addEventListener('scroll',()=>{
+        //id: subscriptionListCont 에 class : loading
         const{
             scrollTop,
             clientHeight,
@@ -100,10 +105,21 @@ function scrollInfinity2(target){
         } = target;
 
         if(scrollTop + clientHeight >= scrollHeight - 5 && length === limit){
+            // createLoading();
             length = 0;
             getSubscriptionList(++currentPage);
         }
     })
+}
+const subscription_loading = document.createElement('div');
+
+function createLoading(){
+    subscription_loading.classList.add('subscription_loading');
+    subscription_loading.innerHTML=`<img src="/img/loading.gif">`;
+    subscriptionListCont.append(subscription_loading);
+}
+function removeLoading(){
+    subscription_loading.remove();
 }
 
 getSubscriptionList(1);

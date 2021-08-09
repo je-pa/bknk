@@ -5,11 +5,16 @@
 #subscriptionCont_right{  flex-grow: 1; padding: 20px 15px; max-height: 100%; max-width: 670px; display: flex; flex-direction: column;}
 #subscriptionCont_right_header{ font-size: 18px; font-weight: 900; text-align: center; height: 8%; border-bottom: 1px solid #cfcfcf; color: #616161; }
 #subscriptionListCont{ flex-grow: 1;max-height: 87%;  overflow-y: auto; margin: 5px 0; padding: 0 10px;}
-#subscriptionListCont .subscriptionItemCont{  padding: 15px 0 ; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ececec;}
+#subscriptionListCont .subscriptionItemCont{  padding: 15px 10px ; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; /*border-bottom: 1px solid #ececec;*/}
+#subscriptionListCont .subscriptionItemCont:hover{ background-color: #ececec;}
 #subscriptionListCont .subscriptionItemCont .subscriptionItem_left{ display: flex; gap: 10px;}
-
+#subscriptionListCont .subscriptionItemCont .subscriptionItem_left div{ display: flex; align-items: center;}
 .cancel_subscription-modal .btnCancel { border-radius: 5px; margin: 8px auto; padding: 12px 15px; border: none; background-color: #cfcfcf; width: 100%;}
 .shadow{ margin-right: 15px;}
+
+#subscriptionListCont .subscription_loading { display: flex; align-items: center; justify-content: center; height: 45px;}
+#subscriptionListCont .subscription_loading img { height: 22px;}
+
 
 @media screen and (max-width: 768px){
     .contW935{
