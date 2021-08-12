@@ -50,12 +50,12 @@ spring:
             authorization-grant-type: authorization_code
             client-id: eabcda074908fecc038dc16a22f1b3cf #카카오 요약정보에 REST API키
             client-secret: tFnxXVabfNkVgo4iQrLU5Px4RuAWJ1xL #카카오 로그인의 보안에서 client secret
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}" #{registrationId}:kakao
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}" #{baseUrl}:localhost {registrationId}:kakao
             scope:
               - profile_nickname
               - profile_image
-              - account_email
-              - gender
+#              - account_email
+#              - gender
             client-authentication-method: POST
             client-name: Kakao
           naver:
@@ -63,7 +63,7 @@ spring:
             client-id: BlUbB8aqm2NDfY08uDGC #네이버 Client-id
             client-secret: lb1xSGigP1 #네이버 client-secret
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}" #{registrationId}:naver
-            scope: name,email,profile_image,gender,mobile
+            scope: name,profile_image # ,gender,mobile,email
             client-name: Naver
 
         provider:

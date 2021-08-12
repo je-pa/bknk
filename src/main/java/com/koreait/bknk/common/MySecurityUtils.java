@@ -4,13 +4,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MySecurityUtils {
-    public int getRandomNumber(int sNumber, int eNumber){
-        return (int)(Math.random()*(eNumber-sNumber+1))+sNumber;
-    }
+    public int getRandomNumber(int sNumber, int eNumber){ return (int)(Math.random()*(eNumber-sNumber+1))+sNumber; }
 
-    public int getRandomNumber(int eNumber){
-        return getRandomNumber(0,eNumber);
-    }
+    public int getRandomNumber(int eNumber){ return getRandomNumber(0,eNumber); }
 
     public String getRandomDigit(int len){
         StringBuilder sb = new StringBuilder();

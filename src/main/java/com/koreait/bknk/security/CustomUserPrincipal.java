@@ -29,7 +29,12 @@ public class CustomUserPrincipal implements UserDetails , OAuth2User {
     public String getPassword() {  return user.getPw();    }
 
     @Override
-    public String getUsername() {  return user.getEmail();    }
+    public String getUsername() {
+        if(this.attributes == null){
+            return user.getEmail();
+        }
+        return user.getServerID();
+    }
 
     @Override
     public boolean isAccountNonExpired() {  return true;    }

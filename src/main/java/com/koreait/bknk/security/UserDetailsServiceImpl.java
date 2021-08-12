@@ -14,13 +14,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return new CustomUserPrincipal(loadUserByUsernameAndProvider(email, "local"));
+        return new CustomUserPrincipal(loadUserByUsernameAndProvider(email, null,"local"));
     }
 
-    public UserEntity loadUserByUsernameAndProvider(String id, String provider) throws UsernameNotFoundException {
+    public UserEntity loadUserByUsernameAndProvider(String email,String id, String provider) throws UsernameNotFoundException {
         UserEntity param = new UserEntity();
         param.setProvider(provider);
-        param.setEmail(id);
+        param.setEmail(email);
+        param.setServerID(id);
+        System.out.println("U::"+param);
         return  mapper.selUser(param);
     }
 

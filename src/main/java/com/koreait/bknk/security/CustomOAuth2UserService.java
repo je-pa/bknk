@@ -1,6 +1,7 @@
 package com.koreait.bknk.security;
 
 import com.koreait.bknk.security.model.*;
+import com.koreait.bknk.user.UserMapper;
 import com.koreait.bknk.user.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -17,36 +18,42 @@ import java.util.Map;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Autowired
     private UserDetailsServiceImpl myUserService;
-
-    @Override
+    @Autowired private UserMapper userMapper;
+    @Override                                   //넘어온값 id,
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
         String registrationId = oAuth2UserRequest.getClientRegistration().getRegistrationId();
 
         Map<String, Object> attributes = oAuth2User.getAttributes();
-        Map<String, Object> modifyAttributes = modifyUserAttributes(registrationId, attributes);
+        Map<String, Object> modifyAttributes = modifyUserAttributes(registrationId, attributes); // 네이버 카카오를 위해서 만듦
 
         OAuth2UserInfo userInfo = getOauth2UserInfo(registrationId, modifyAttributes);
         UserEntity user = convertOauthToUserEntity(userInfo);
-        UserEntity chkUser = myUserService.loadUserByUsernameAndProvider(user.getEmail(), user.getProvider());
+        UserEntity chkUser = myUserService.loadUserByUsernameAndProvider(null, user.getServerID(), user.getProvider());
         //DB에 값 있나 체크 없으면 insert
         if(chkUser == null) { //처음 join했을때
+            int n = 0;
+            String nick = user.getNick();
+            while (userMapper.chkNick(user)!=null){
+                user.setNick(nick+(++n));
+            }
             myUserService.join(user);
             chkUser = user;
         }
-//        CustomUserPrincipal loginUser = new CustomUserPrincipal(chkUser, attributes);
-        return new CustomUserPrincipal(chkUser, attributes);
+        CustomUserPrincipal loginUser = new CustomUserPrincipal(chkUser, attributes);
+        return loginUser; //new CustomUserPrincipal(chkUser, attributes);
     }
     private UserEntity convertOauthToUserEntity(OAuth2UserInfo userInfo) {
         UserEntity user = UserEntity.builder()
-                .email(userInfo.getId()) //social 사이트의 pk값을 우리 user테이블에 email에 저장함.
-                .nm(userInfo.getName())
+                .serverID(userInfo.getId()) //social 사이트의 pk값을 우리 user테이블에 email에 저장함.
+                .nm(userInfo.getName().replace(" ",""))
+                .nick(userInfo.getName().replace(" ",""))
                 .provider(userInfo.getProvider())
                 .build();
         return user;
     }
 
-    private OAuth2UserInfo getOauth2UserInfo(String registrationId, Map<String, Object> attributes) {
+    private OAuth2UserInfo getOauth2UserInfo(String registrationId, Map<String, Object> attributes) { //통일시키기 위한과정
         if(registrationId.equalsIgnoreCase(SocialType.GOOGLE.toString())) {
             return new GoogleOAuth2UserInfo(attributes);
         } else if (registrationId.equalsIgnoreCase(SocialType.FACEBOOK.toString())) {
