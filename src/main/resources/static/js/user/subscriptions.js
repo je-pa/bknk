@@ -1,7 +1,7 @@
 const subscriptionListCont = document.querySelector('#subscriptionListCont');
 const contW935Elem = document.querySelector('.contW935');
 let length = 0;
-let currentPage = 0;
+let currentPage = 1;
 const limit = 10;
 
 function getSubscriptionList(page){
