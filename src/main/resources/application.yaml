@@ -29,7 +29,7 @@ spring:
     multipart:
       max-file-size: 5MB
       max-request-size: 30MB
-      location: D:/springImg
+      location: D:/springImg2
   security:
     oauth2:
       client:

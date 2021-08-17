@@ -4,10 +4,11 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="basicLayout">
     <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/root/home.css}">
     </th:block>
     <th:block layout:fragment="js">
     </th:block>
     <th:block layout:fragment="content">
-            <div class="Container">home</div>
+        <img class="homeMainImg" th:src="@{/img/homeImg/home3.jpg}">
     </th:block>
 </html>
