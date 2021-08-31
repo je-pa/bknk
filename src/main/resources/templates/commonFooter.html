@@ -2,6 +2,28 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org">
 <footer th:fragment="footer">
-    <div>footer</div>
+    <div id="footerCnt">
+        <div class="footer_top">
+            <h4>BKNK</h4>
+            <span>2021.07.20 ~ 2021.08.19</span>
+        </div>
+        <div class="footer_bottom">
+            <h5>- Team members -</h5>
+            <ul>
+                <li>
+                    <span>이경욱</span>
+                    <img th:src="@{/img/member/lee3.PNG}">
+                </li>
+                <li>
+                    <span>박지은</span>
+                    <img th:src="@{/img/member/park3.PNG}">
+                </li>
+                <li>
+                    <span>김동훈</span>
+                    <img th:src="@{/img/member/kim3.PNG}">
+                </li>
+            </ul>
+        </div>
+    </div>
 </footer>
 </html>
