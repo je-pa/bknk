@@ -1,0 +1,24 @@
+.pageTitle { min-width: 350px; margin-top: 50px; height: 50px; font-size: 25px; font-weight: bold; color: #757575; padding-left: 30px; display: flex; align-items: center; justify-content: center; /*background-color: #c7c7c7;*/ /*border-bottom: 1px solid #c7c7c7;*/ gap: 18px; }
+
+#feedContainer a span > img{width: 100%;}
+.favDiv{display: flex; justify-content: space-between; align-items: center; margin: 0 20px;}
+.favDiv div{ padding-left: 10px; font-weight: 600;}
+.favDiv > a{display: flex;}
+.favDiv > i{font-size: 30px; color: #ef5350;}
+#feedContainer{display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px 5%;}
+#feedContainer > div{box-shadow: 6px 6px 6px -4px #dfe6e9; background-color: #fafafa; padding: 18px 0; border-radius: 8px;}
+#feedContainer div{color: #9e9e9e;}
+#feedContainer a span{margin: 17px 13px; display: flex; flex-direction: column; justify-content: center;
+    align-items: center; gap: 10px;}
+#feedContainer a span img { height: 220px; object-fit: cover;}
+#feedContainer a span div.title{text-align: center; text-overflow: ellipsis; font-size: 16px;
+}
+
+#pagingContainer{ margin-bottom: 60px;display: flex; justify-content: center; gap: 12px;}
+
+@media screen and (max-width: 760px) {
+    /*#feedContainer{display: grid; grid-template-columns: repeat(1, 1fr); }*/
+    #feedContainer{display: flex; flex-direction: column; }
+    #feedContainer > div{margin: 10px auto; width: 90%; }
+    #feedContainer a span img { height: auto;}
+}

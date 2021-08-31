@@ -63,4 +63,20 @@ public class MyFileUtils {
             return null;
         }
     }
+
+    public void delFile(String path){
+        File deleteFolder = new File(uploadImagePath+path);
+
+        if(deleteFolder.exists()){
+            File[] deleteFolderList = deleteFolder.listFiles();
+
+            for (int j = 0; j < deleteFolderList.length; j++) {
+                deleteFolderList[j].delete();
+            }
+
+            if(deleteFolder.listFiles().length == 0 && deleteFolder.isDirectory()){
+                deleteFolder.delete();
+            }
+        }
+    }
 }

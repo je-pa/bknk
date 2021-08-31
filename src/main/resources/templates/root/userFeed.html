@@ -6,9 +6,11 @@
 <head><title th:text="${feedUser.nick}"></title></head>
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/css/root/userFeed.css}">
+    <link rel="stylesheet" href="/css/feedCont.css">
 </th:block>
 <th:block layout:fragment="js">
     <script defer th:src="@{/js/common.js}"></script>
+    <script defer src="/js/feed/feedList.js"></script>
     <script defer th:src="@{/js/user/subscriptionsBtn.js}"></script>
     <script defer th:src="@{/js/root/userFeed.js}"></script>
 </th:block>
@@ -27,15 +29,19 @@
                         <button th:if="${feedUser.subscriber == 0}" id="subscription" class="subscriptionBtn DoSubscriptionBtn btn">구독하기</button>
                         <button th:if="${feedUser.subscriber == 1}" id="subscription" class="subscriptionBtn btn">구독중</button>
                     </th:block>
+                    <th:block th:if="${feedUser.iuser == auth.iuser}">
+                        <a th:href="@{/user/edit}"><i class="fas fa-user-edit"></i> 프로필 편집</a>
+                    </th:block>
                 </div>
                 <div class="cont_inform">
                     <div th:text="'등록일 : '+${feedUser.regdt}"></div>
                 </div>
             </div>
         </div>
-        <div class="feed_list">
+        <div id="feedContainer" class="feed_list">
 <!--            여기에 리스트 뿌려-->
         </div>
+        <div id="pagingContainer"></div>
     </div>
 </th:block>
 </html>

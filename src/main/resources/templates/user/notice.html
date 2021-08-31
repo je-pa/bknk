@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="basicLayout">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/user/subscriptions.css}">
+</th:block>
+<th:block layout:fragment="js">
+    <script defer th:src="@{/js/common.js}"></script>
+    <script defer th:src="@{/js/user/notice.js}"></script>
+</th:block>
+<th:block layout:fragment="content">
+    <div class="contW935" th:with="auth=${#authentication.getPrincipal().getUser()}">
+        <div id="subscriptionCont_left">
+            <div th:text="${auth.nick}" class="pointer" th:onclick="'location.href=\''+ @{/{nick}/(nick=${auth.nick})} + '\''"></div>
+            <img th:unless="${auth.mainProfile == null || auth.mainProfile == ''}" class="pointer mainProfileImg profile wh150" th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}" th:onclick="'location.href=\''+ @{/{nick}/(nick=${auth.nick})} + '\''">
+            <img th:if="${auth.mainProfile == null || auth.mainProfile == ''}" class="pointer mainProfileImg profile wh150" th:src="@{/img/profile.png}" th:onclick="'location.href=\''+ @{/{nick}/(nick=${auth.nick})} + '\''">
+        </div>
+        <div id="subscriptionCont_right" class="shadow">
+            <div id="subscriptionCont_right_header">알림</div>
+            <div id="subscriptionListCont">
+<!--                <div class="subscription_loading"><img th:src="@{/img/loading.gif}"></div>-->
+            </div>
+        </div>
+    </div>
+    <!--구독취소모달-->
+</th:block>
+</html>

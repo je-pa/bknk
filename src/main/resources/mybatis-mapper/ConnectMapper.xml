@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koreait.bknk.connect.ConnectMapper">
+    <select id="selSubscribeList" resultType="com.koreait.bknk.connect.model.SubscribeDTO">
+        SELECT A.lastLogin, IFNULL(B.feedIuser,0) AS feedIuser, ifnull(C.iboard,0) AS iboard, D.nick, D.mainProfile, C.regdt, D.iuser
+        FROM t_user A
+        LEFT JOIN t_user_subscribe B
+        ON A.iuser=B.subscriberIuser
+        LEFT JOIN t_board C
+        ON B.feedIuser=C.iuser
+        LEFT JOIN t_user D
+        ON C.iuser=D.iuser
+        <if test="limit==0">
+            WHERE A.iuser=${subscriberIuser} AND A.lastLogin2 &lt;= C.regdt
+        </if>
+        <if test="limit!=0">
+            WHERE A.iuser=${subscriberIuser} AND A.lastLogin &lt;= C.regdt
+            order by C.regdt desc
+            limit ${startPage}, ${limit}
+        </if>
+
+    </select>
+
+    <update id="updLastLogin">
+        UPDATE t_user SET lastLogin=now()
+        WHERE iuser=${subscriberIuser}
+    </update>
+
+    <update id="updLastLogin2">
+        UPDATE t_user SET lastLogin2= now()
+        WHERE iuser=${subscriberIuser}
+    </update>
+</mapper>

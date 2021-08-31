@@ -5,10 +5,21 @@
       layout:decorator="basicLayout">
     <th:block layout:fragment="css">
         <link rel="stylesheet" th:href="@{/css/root/home.css}">
+        <link rel="stylesheet" href="/css/feedCont.css">
     </th:block>
     <th:block layout:fragment="js">
+        <script defer src="/js/feed/feedList.js"></script>
+        <script defer src="/js/home/home.js"></script>
     </th:block>
     <th:block layout:fragment="content">
-        <img class="homeMainImg" th:src="@{/img/homeImg/home3.jpg}">
+        <img class="mainImg" th:src="@{/img/home11.png}">
+        <div class="pageTitle">
+            <i class="fas fa-heart pointer"></i>
+            <div>인기 게시글 </div>
+        </div>
+        <div id="feedContainer" class="contW935"></div>
+        <div class="hotButton">
+            <a href="/b/hot"><i class="fas fa-plus-circle"> 인기게시글 더보기</i></a>
+        </div>
     </th:block>
 </html>

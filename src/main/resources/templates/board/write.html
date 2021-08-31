@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="basicLayout">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/board/write.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+</th:block>
+<th:block layout:fragment="js">
+    <script defer src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script defer src="/js/board/write.js"></script>
+</th:block>
+<th:block layout:fragment="content">
+    <div id="writeContainer" class="contW935">
+        <form id="writeForm" method="post" action="create" enctype="multipart/form-data">
+            <div>
+                <div>제목 : </div>
+                <input class="textWindow" type="text" name="title" placeholder="제목을 입력하시오" required>
+            </div>
+            <div>
+                <div>위치 : </div>
+                <div class="textWindow">
+                    <select name="region" form="writeForm" required>
+                        <option value="">지역선택</option>
+                        <option value="1">서울</option>
+                        <option value="2">부산</option>
+                        <option value="3">대구</option>
+                        <option value="4">인천</option>
+                        <option value="5">광주</option>
+                        <option value="6">대전</option>
+                        <option value="7">울산</option>
+                        <option value="8">세종</option>
+                        <option value="9">경기</option>
+                        <option value="10">강원</option>
+                        <option value="11">충북</option>
+                        <option value="12">충남</option>
+                        <option value="13">전북</option>
+                        <option value="14">전남</option>
+                        <option value="15">경북</option>
+                        <option value="16">경남</option>
+                        <option value="17">제주</option>
+                    </select>
+                    <input id="placeNm2"  type="text" name="place" required disabled><button class="btn" type="button" onclick="delClassHide()">주소 검색하기</button>
+                    <input id="placeNm1" type="hidden" name="place" required>
+                </div>
+            </div>
+            <div>
+                <div>내용 : </div>
+                <textarea class="textWindow" name="ctnt" required></textarea>
+            </div>
+
+            <input id="location_Y" type="hidden" name="location_Y" required>
+            <input id="location_X" type="hidden" name="location_X" required>
+            <input id="input-multipleIMG" multiple type="file" accept="image/*" name="imgArr">
+
+            <div class="swiper-container mySwiper">
+                <div class="swiper-wrapper">
+                    <!--                    <div class="swiper-slide">-->
+                    <!--                        <img src="https://swiperjs.com/demos/images/nature-1.jpg" />-->
+                    <!--                    </div>-->
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <input class="writeBtn btn" type="submit" value="게시글 작성">
+        </form>
+
+    </div>
+
+    <div id="map_modal" class="openModal">
+        <div class="map_wrap pointer" data-x="" data-y="">
+            <div class="modal_close_parent"><i class="modal_close fas fa-times"></i></div>
+            <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+
+            <div id="menu_wrap" class="bg_white">
+                <div class="option">
+                    <div>
+                        <form onsubmit="searchPlaces(); return false;">
+                            키워드 : <input type="text" value="" id="keyword" size="15">
+                            <button type="submit">검색하기</button>
+                        </form>
+                    </div>
+                </div>
+                <hr>
+                <ul id="placesList"></ul>
+                <div id="pagination"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=50b42248976a05efd824c09d0d575eab&libraries=services"></script>
+</th:block>
+
+</html>

@@ -29,4 +29,6 @@ public class UserEntity {
     private int cntFollowing;
     private int cntFollowed;
     private int cntBoard;
+
+    private String lastLogin;
 }

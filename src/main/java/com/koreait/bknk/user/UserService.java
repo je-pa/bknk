@@ -136,6 +136,7 @@ public class UserService {
             param.setPw(passwordEncoder.encode(param.getPw()));
             if(mapper.updUser(param)==1){
                 result = 2;
+                loginUser.setPw(param.getPw());
             }
         }else{
             result = mapper.updUser(param);

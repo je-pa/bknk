@@ -5,6 +5,9 @@
     margin: 8px 0;
     width: 100%;
 }
+.loadingParent .btn{
+    background-color: #cfcfcf;
+}
 
 .logoCont{ padding-top: 50px; padding-bottom: 15px;}
 /*.logo { font-size: 58px; color: #707070; }*/

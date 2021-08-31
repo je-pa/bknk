@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="basicLayout">
+<th:block layout:fragment="css">
+  <link rel="stylesheet" href="/css/feedCont.css">
+</th:block>
+<th:block layout:fragment="js">
+  <script defer src="/js/feed/search.js"></script>
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="pageTitle">
+      <i class="fas fa-search"></i>
+        <div>검색어 : </div>
+        <div id="searchData"  th:data-search-word="${search.searchWord}" th:data-search-type="${search.searchType}" th:text="'\' '+${search.searchWord}+' \''"></div>
+    </div>
+    <div id="feedContainer" class="contW935"></div>
+    <div th:if="${pageNum!=0}" id="pagingContainer" th:data-page-num="${pageNum}"></div>
+</th:block>
+
+</html>

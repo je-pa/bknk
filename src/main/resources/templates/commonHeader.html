@@ -13,14 +13,30 @@
         </div>
 
         <div class="header__center">
-<!--            <input type="text">-->
-<!--            <div>MAP</div>-->
+            <ul>
+                <li class="searchBox">
+                    <form name="searchForm" action="/b/search">
+                        <select name="searchType">
+                            <option value="1">제목</option>
+                            <option value="2">내용</option>
+                            <option value="3">제목+내용</option>
+                            <option value="4">작성자</option>
+                        </select>
+                        <input id="searchWindow1" type="text" name="searchWord" placeholder="검색어를 입력해주세요">
+                        <button typ="submit"><i class="fas fa-search pointer"></i></button>
+                    </form>
+                </li>
+                <li>
+                    <a th:href="@{/map/map}">MAP</a>
+                </li>
+            </ul>
+
         </div>
 
         <div class="header__right">
             <ul class="menus" sec:authorize="isAnonymous()">
-                <li><a th:href="@{/user/login}">로그인</a></li>
-                <li><a th:href="@{/user/join}">회원가입</a></li>
+                <li><a th:href="@{/user/login}">LOGIN </a></li>
+                <li><a th:href="@{/user/join}">JOIN</a></li>
             </ul>
             <ul class="menus" sec:authorize="isAuthenticated()" th:with="auth=${#authentication.getPrincipal().getUser()}">
                 <li class="profileImgBtn">
@@ -28,29 +44,25 @@
                     <img th:if="${auth.mainProfile == null || auth.mainProfile == ''}" class="pointer mainProfileImg profile wh30" th:src="@{/img/profile.png}">
                 </li>
             </ul>
+            <div class="dropdown_menu">
+                <ul class="menus" sec:authorize="isAuthenticated()" th:with="auth=${#authentication.getPrincipal().getUser()}">
+                    <!--                <li><a th:href="@{/}"><i class="fas fa-bell"></i></a></li>-->
+                    <li class="b__border">
+                        <a th:href="@{/{nick}/(nick=${auth.nick})}" >
+                            <img th:unless="${auth.mainProfile == null || auth.mainProfile == ''}" class="mainProfileImg profile wh30" th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}">
+                            <img th:if="${auth.mainProfile == null || auth.mainProfile == ''}" class="mainProfileImg profile wh30" th:src="@{/img/profile.png}">
+                        </a>
+                        <a href="/chat/group"><i class="fas fa-comment-dots"></i></a>
+                        <a href="/connect/notice"><i class="fas fa-bell"></i></a>
+                    </li>
+                    <li class="b__border"><a href="/b/create"><i class="fas fa-plus-circle"></i> 게시글 작성하기</a></li>
+                    <li><a th:href="@{/user/subscriptions}"><i class="fas fa-star"></i> 구독계정리스트</a></li>
+                    <li class="b__border"><a href="/b/fav"><i class="fas fa-heart"></i> 좋아요한 게시글</a></li>
+                    <li><a th:href="@{/user/logout}">LOGOUT</a></li>
+                </ul>
+            </div>
         </div>
-
     </nav>
-    <div class="dropdown_menu">
-        <ul class="menus" sec:authorize="isAuthenticated()" th:with="auth=${#authentication.getPrincipal().getUser()}">
-            <li>
-                <a th:href="@{/{nick}/(nick=${auth.nick})}" >
-                        <span>
-                            <span th:text="${auth.nick}"></span>
-                        </span>
-                </a>
-            </li>
-            <!--                <li><a th:href="@{/}"><i class="fas fa-bell"></i></a></li>-->
-            <li>
-                <a th:href="@{/user/edit}">
-                    <img th:unless="${auth.mainProfile == null || auth.mainProfile == ''}" class="mainProfileImg profile wh30" th:src="@{/pic/user/{iuser}/{img}(iuser=${auth.iuser},img=${auth.mainProfile})}">
-                    <img th:if="${auth.mainProfile == null || auth.mainProfile == ''}" class="mainProfileImg profile wh30" th:src="@{/img/profile.png}">
-                </a>
-            </li>
-            <li><a th:href="@{/user/subscriptions}">구독계정리스트</a></li>
-            <!--                <li><a th:href="@{/b/fav}">좋아요한 게시글</a></li>-->
-            <li><a th:href="@{/user/logout}">로그아웃</a></li>
-        </ul>
-    </div>
+
 </header>
 </html>

@@ -1,0 +1,8 @@
+/*#mapListContainer{display: flex;}*/
+
+/*#feedContainer{display: grid; grid-template-columns: repeat(3,minmax(auto,150px)); grid-template-rows: repeat(3,minmax(auto,150px));*/
+/*                grid-gap: 10px; margin: 0;}*/
+
+
+/*#mapContainer{flex:1;}*/
+#map{height: 500px;}

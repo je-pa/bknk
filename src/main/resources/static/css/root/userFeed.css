@@ -4,11 +4,31 @@
 .feed_header .feed_header_left{ width: 30%; min-width: 180px;}
 .feed_header .feed_header_left img{ display: block; margin: auto auto;}
 
-.feed_header .feed_header_right .cont_nick{ display: flex; align-items: center;}
+.feed_header .feed_header_right .cont_nick{ color: #5F5F5F; display: flex; align-items: center;}
 .feed_header .feed_header_right .cont_nick h2{ margin-right: 30px;}
+.feed_header .feed_header_right .cont_nick a{  color: #5F5F5F; font-size: 17px; border: 1px solid #cfcfcf; border-radius: 5px; height: 33px; width: 120px; display: flex; justify-content: center; align-items: center; }
 
 .feed_header .feed_header_right .cont_inform div{ font-weight: 300;}
 
-.feed_list{ flex-grow: 1;}
+.feed_list{ flex-grow: 1; margin: 40px 0;}
 
 .cancel_subscription-modal .btn { border-radius: 5px; margin: 8px auto; padding: 12px 15px; border: none; background-color: #cfcfcf; width: 100%;}
+
+/*!*----------------------------------[ 경욱*!*/
+/*#feedContainer a span > img{width: 100%;}*/
+/*.favDiv{display: flex; justify-content: space-between; align-items: center; margin: 0 20px;}*/
+/*.favDiv > a{display: flex;}*/
+/*.favDiv > a >img{width: 30px; border-radius: 50%   }*/
+/*.favDiv > i{font-size: 30px; color: red;}*/
+/*#feedContainer{display: grid; grid-template-columns: repeat(3, minmax(auto,auto)); gap: 30px 65px; margin-top: 80px;}*/
+/*#feedContainer > div{box-shadow: 8px 8px 8px -4px #dfe6e9;}*/
+/*#feedContainer a span{margin: 20px 20px; display: flex; flex-direction: column; justify-content: center;*/
+/*    align-items: center;}*/
+/*#feedContainer a span div.title{text-align: center; text-overflow: ellipsis; font-size: 16px;*/
+/*}*/
+
+/*@media screen and (max-width: 760px) {*/
+/*    #feedContainer{display: grid; grid-template-columns: repeat(1, minmax(400px,auto)); }*/
+/*    #feedContainer > div{margin: 0 auto}*/
+
+/*}*/

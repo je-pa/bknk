@@ -95,4 +95,12 @@ if(subscriptionElem && subscriptionElem.textContent=='구독중'){
 //                     break;
 //             }
 //         });
-// }
+
+
+// ---경욱---------------------------------------------
+feedListObj.url=`/b/userFeedList`
+feedListObj.iuser=document.querySelector('#feedUserConst').dataset.iuser
+console.log(feedListObj.iuser)
+feedListObj.type=0
+feedListObj.makeFeedList()
+feedListObj.getFeedPage()

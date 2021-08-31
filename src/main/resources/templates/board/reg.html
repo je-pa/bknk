@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="basicLayout">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="/css/board/reg.css">
+</th:block>
+
+<th:block layout:fragment="js">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script defer src="/js/board/reg.js"></script>
+</th:block>
+
+<th:block layout:fragment="content">
+    <div id="regContainer" class="contW935">
+
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" th:each="img : ${result}">
+                    <img th:src="@{/pic/board/{iboard}/{img_addr}(iboard=${img.iboard} ,img_addr=${img.img_addr})}">
+                </div>
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+
+            <!-- If we need scrollbar -->
+            <div class="swiper-scrollbar"></div>
+        </div>
+
+        <div id=detail_right>
+            <div id="detail_head" class="detail_section">
+                <span id="infoSection" th:data-iboard="${result[0].iboard}"></span>
+                <a th:href="@{/{writer}/(writer=${result[0].writer})}">
+                    <img class="wh30 profile" th:src="@{/pic/user/{iuser}/{mainProfile}(iuser=${result[0].iuser},mainProfile=${result[0].mainProfile})}" onerror="this.src='/img/profile.png'">
+                    <div th:text="${result[0].writer}"></div>
+                </a>
+                <div>
+                <i th:if="${result[0].iuser} eq ${#authentication.getPrincipal().getUser().iuser}" class="fas fa-ellipsis-h" onclick="">
+                    <div id="menuModal">
+                        <ul>
+                            <li>수정</li>
+                            <li onclick="delboard()">삭제</li>
+                        </ul>
+                    </div>
+                </i>
+                </div>
+        <!--        <div th:text="계절 + ${result[0].season}"></div>-->
+            </div>
+            <div th:text="${result[0].ctnt}"></div>
+            <div id="cmtContainer">
+
+            </div>
+
+            <div id="detail-section1" class="detail_section">
+                <div id="thumbs-up" th:data-myfav="${chFav}" th:data-favcount="${result[0].cntFav}"></div>
+                <div><button type="button" onclick="delClassHide()">위치보기</button></div>
+                <!--        <div th:if="${chFav.countFav} eq 0"><i th:text="${result[0].cntFav}" class="far fa-thumbs-up"></i></div>-->
+                <!--        <div th:unless="${chFav.countFav} eq 0"><i th:text="${result[0].cntFav}" class="fas fa-thumbs-up"></i></div>-->
+            </div>
+
+
+            <div>
+                <form name="cmtWindow" onsubmit="return uploadCmt()">
+                    <input name="cmt" type="text" placeholder="댓글을 입력하시오">
+                    <input type="submit" value="댓글작성">
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+    <div id="map_modal" class="openModal" th:data-x="${result[0].location_X}" th:data-y="${result[0].location_Y}">
+        <div class="map_wrap">
+            <div class="modal_close_parent"><i class="modal_close fas fa-times"></i></div>
+            <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+            <!--            <div class="hAddr">-->
+            <!--                <span class="title">지도중심기준 행정동 주소정보</span>-->
+            <!--                <span id="centerAddr"></span>-->
+            <!--            </div>-->
+        </div>
+    </div>
+
+    <div id="modCmtContainer" class="hide">
+        <div>
+            <div><div>댓글 수정</div><i class="fas fa-times" onclick="delClassHide2()"></i></div>
+            <form name="modCmtForm" onsubmit="return modCmt()">
+                <textarea name="cmt"></textarea>
+                <div>
+                    <input name="icmt" type="hidden">
+                    <input type="submit" value="수정">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=50b42248976a05efd824c09d0d575eab&libraries=services"></script>
+
+</th:block>
+
+</html>

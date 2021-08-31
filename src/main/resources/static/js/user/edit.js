@@ -190,7 +190,7 @@ function pwFrmChk(){
         return false;
     }
     if(ajaxResult ===2 && (chkPwResultElem.textContent === null || chkPwResultElem.textContent === '')){
-        return false;/////
+        return true;/////
     }
     return false;
 }

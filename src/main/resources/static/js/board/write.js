@@ -1,0 +1,352 @@
+var multipleContainer = document.getElementsByClassName("swiper-wrapper")[0]
+var inputMultipleImage = document.getElementById("input-multipleIMG")
+inputMultipleImage.addEventListener("change", e => {
+    readMultipleImage(e.target)
+})
+
+const swiper = new Swiper(".mySwiper", {
+    effect: "coverflow",
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: "auto",
+    coverflowEffect: {
+        rotate: 50,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: false,
+    },
+    pagination: {
+        el: ".swiper-pagination",
+    },
+});
+
+var mapModal=document.querySelector('#map_modal')
+
+function readMultipleImage(input) {
+    multipleContainer.innerHTML=''
+    // 인풋 태그에 파일들이 있는 경우
+    if(input.files) {
+        // 이미지 파일 검사 (생략)
+        console.log(input.files)
+        // 유사배열을 배열로 변환 (forEach문으로 처리하기 위해)
+        var fileArr = Array.from(input.files)
+        // var Div1 = document.createElement("div")
+        // Div1.classList='swiper-slide'
+
+        for(var i=0; i<input.files.length; i++) {
+            const file = input.files[i];
+
+            const DIVTAG=document.createElement('div')
+            const reader = new FileReader()
+            const imgTag = document.createElement("img")
+            imgTag.style.width='100%'
+            DIVTAG.style.width='30%'
+            DIVTAG.style.height='30%'
+            DIVTAG.append(imgTag)
+            DIVTAG.classList='swiper-slide'
+            reader.onload = e => {
+                imgTag.src = e.target.result
+            }
+            reader.readAsDataURL(file)
+            console.log(reader.onload)
+            multipleContainer.append(DIVTAG)
+        }
+
+        swiper.update();
+
+
+        //
+        // var swiper_container=document.getElementsByClassName('swiper-container')
+        // swiper_container.style.width='100%'
+        // swiper_container.style.paddingTop='50px'
+        // swiper_container.style.paddingBottom='50px'
+        //
+        // var swiper_slide=document.getElementsByClassName('swiper-slide')
+        // swiper_slide.style.backgroundPosition='center'
+        // swiper_slide.style.backgroundSize='cover'
+        // swiper_slide.style.width='300px'
+        // swiper_slide.style.height='300px'
+        //
+        // for(var i=0; i<swiper_slide.length; i++){
+        //     swiper_slide[i].firstChild.style.display='block'
+        //     swiper_slide[i].firstChild.style.width='100%'
+        // }
+    }
+}
+
+//모달창 띄우는 함수
+function delClassHide(){
+    var closeIcon=document.querySelector('.modal_close', '.fas' ,'.fa-times')
+    mapModal.classList='openModal'
+    closeIcon.addEventListener('click',()=>{
+        onClassHide()
+    })
+}
+
+//모달창 숨기기 함수
+function onClassHide(){
+    mapModal.classList='hide'
+}
+
+
+
+
+
+//--------------------------------------------------------------------------지도 부분API
+// 마커를 담을 배열입니다
+
+var markers = [];
+
+var KEY=document.getElementById('keyword')
+var mapWrap=document.querySelector('.map_wrap')
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    mapOption = {
+        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+// 지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer, mapOption);
+
+// 장소 검색 객체를 생성합니다
+var ps = new kakao.maps.services.Places();
+
+// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+
+// 키워드로 장소를 검색합니다
+
+
+// 키워드 검색을 요청하는 함수입니다
+function searchPlaces() {
+
+    var keyword = KEY.value;
+
+    if (!keyword.replace(/^\s+|\s+$/g, '')) {
+        alert('키워드를 입력해주세요!');
+        return false;
+    }
+
+    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+    ps.keywordSearch( keyword, placesSearchCB);
+}
+
+// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+function placesSearchCB(data, status, pagination) {
+    if (status === kakao.maps.services.Status.OK) {
+
+        // 정상적으로 검색이 완료됐으면
+        // 검색 목록과 마커를 표출합니다
+        displayPlaces(data);
+
+        // 페이지 번호를 표출합니다
+        displayPagination(pagination);
+
+    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+
+        alert('검색 결과가 존재하지 않습니다.');
+        return;
+
+    } else if (status === kakao.maps.services.Status.ERROR) {
+
+        alert('검색 결과 중 오류가 발생했습니다.');
+        return;
+
+    }
+}
+
+// 검색 결과 목록과 마커를 표출하는 함수입니다
+function displayPlaces(places) {
+
+    var listEl = document.getElementById('placesList'),
+        menuEl = document.getElementById('menu_wrap'),
+        fragment = document.createDocumentFragment(),
+        bounds = new kakao.maps.LatLngBounds(),
+        listStr = '';
+
+    // 검색 결과 목록에 추가된 항목들을 제거합니다
+    removeAllChildNods(listEl);
+
+    // 지도에 표시되고 있는 마커를 제거합니다
+    removeMarker();
+
+    for ( var i=0; i<places.length; i++ ) {
+
+        // 마커를 생성하고 지도에 표시합니다
+        var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
+            marker = addMarker(placePosition, i),
+            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        bounds.extend(placePosition);
+
+        // 마커와 검색결과 항목에 mouseover 했을때
+        // 해당 장소에 인포윈도우에 장소명을 표시합니다
+        // mouseout 했을 때는 인포윈도우를 닫습니다
+        (function(marker, title, places) {
+            kakao.maps.event.addListener(marker, 'mouseover', function() {
+                displayInfowindow(marker, title);
+            });
+
+            kakao.maps.event.addListener(marker, 'click', function() {
+                markClick(places.y,places.x, places.place_name)
+            });
+
+            kakao.maps.event.addListener(marker, 'mouseout', function() {
+                infowindow.close();
+            });
+
+            itemEl.onmouseover =  function () {
+                displayInfowindow(marker, title);
+            };
+
+            itemEl.onmouseout =  function () {
+                infowindow.close();
+            };
+        })(marker, places[i].place_name, places[i]);
+
+        fragment.appendChild(itemEl);
+    }
+
+    // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+    listEl.appendChild(fragment);
+    menuEl.scrollTop = 0;
+
+    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+    map.setBounds(bounds);
+}
+
+// 검색결과 항목을 Element로 반환하는 함수입니다
+function getListItem(index, places) {
+
+    var el = document.createElement('li'),
+        itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
+            '<div class="info">' +
+            '   <h5>' + places.place_name + '</h5>';
+
+    if (places.road_address_name) {
+        itemStr += '    <span>' + places.road_address_name + '</span>' +
+            '   <span class="jibun gray">' +  places.address_name  + '</span>';
+    } else {
+        itemStr += '    <span>' +  places.address_name  + '</span>';
+    }
+
+    itemStr += '  <span class="tel">' + places.phone  + '</span>' +
+        '</div>';
+
+    el.innerHTML = itemStr;
+    el.className = 'item';
+    el.addEventListener('click',()=>{
+        markClick(places.y,places.x,places.place_name)
+    })
+    return el;
+}
+
+// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+function addMarker(position, idx, title) {
+    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+        imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
+        imgOptions =  {
+            spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+            spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+            offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+        },
+        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+        marker = new kakao.maps.Marker({
+            position: position, // 마커의 위치
+            image: markerImage
+        });
+
+    marker.setMap(map); // 지도 위에 마커를 표출합니다
+    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+
+    return marker;
+}
+
+// 지도 위에 표시되고 있는 마커를 모두 제거합니다
+function removeMarker() {
+    for ( var i = 0; i < markers.length; i++ ) {
+        markers[i].setMap(null);
+    }
+    markers = [];
+}
+
+// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
+function displayPagination(pagination) {
+    var paginationEl = document.getElementById('pagination'),
+        fragment = document.createDocumentFragment(),
+        i;
+
+    // 기존에 추가된 페이지번호를 삭제합니다
+    while (paginationEl.hasChildNodes()) {
+        paginationEl.removeChild (paginationEl.lastChild);
+    }
+
+    for (i=1; i<=pagination.last; i++) {
+        var el = document.createElement('a');
+        el.href = "#";
+        el.innerHTML = i;
+
+        if (i===pagination.current) {
+            el.className = 'on';
+        } else {
+            el.onclick = (function(i) {
+                return function() {
+                    pagination.gotoPage(i);
+                }
+            })(i);
+        }
+
+        fragment.appendChild(el);
+    }
+    paginationEl.appendChild(fragment);
+}
+
+// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
+// 인포윈도우에 장소명을 표시합니다
+function displayInfowindow(marker, title) {
+    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+
+    infowindow.setContent(content);
+    infowindow.open(map, marker);
+}
+
+// 검색결과 목록의 자식 Element를 제거하는 함수입니다
+function removeAllChildNods(el) {
+    while (el.hasChildNodes()) {
+        el.removeChild (el.lastChild);
+    }
+}
+
+function markClick(dataY,dataX,place_nm){
+    if(confirm('위치 선택하시겠습니다?')) {
+        var location_x=document.querySelector('#location_X')
+        var location_y=document.querySelector('#location_Y')
+        var placeNm1=document.querySelector('#placeNm1')
+        var placeNm2=document.querySelector('#placeNm2')
+        location_x.value=dataX;
+        location_y.value=dataY;
+        placeNm1.value=place_nm
+        placeNm2.value=place_nm
+        mapModal.className='hide'
+        // var listEl = document.getElementById('placesList')
+        // var pagination=document.querySelector('#pagination')
+        // removeAllChildNods(listEl)
+        // removeMarker()
+        // pagination.innerHTML=''
+        // map.center(37.566826, 126.9786567)
+        return
+    }else{
+        return
+    }
+}
+
+function aaaa(){
+    console.log(data)
+    return false
+}
+//지도 마지막에 hide주기 에러문제로
+mapModal.classList='hide'
+

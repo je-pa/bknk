@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="basicLayout">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/map/region.css">
+    <link rel="stylesheet" href="/css/feedCont.css">
+</th:block>
+<th:block layout:fragment="js">
+    <script defer src="/js/map/map.js"></script>
+    <script defer src="/js/feed/feedList.js"></script>
+    <script defer src="/js/map/region.js"></script>
+</th:block>
+
+<th:block layout:fragment="content">
+    <div id="mapListContainer" class="contW935">
+        <div>
+            <div id="feedContainer" class="contW935">
+
+            </div>
+            <div id="pagingContainer"></div>
+        </div>
+        <div id="mapContainer" th:data-region="${region}">
+            <div class="map_wrap">
+                <div id="map" style="height:500px;overflow:hidden;"></div>
+                <!-- 지도타입 컨트롤 div 입니다 -->
+<!--                <div class="custom_typecontrol radius_border">-->
+<!--                    <span id="btnRoadmap" class="selected_btn" onclick="setMapType('roadmap')">지도</span>-->
+<!--                    <span id="btnSkyview" class="btn" onclick="setMapType('skyview')">스카이뷰</span>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; 지도 확대, 축소 컨트롤 div 입니다 &ndash;&gt;-->
+<!--                <div class="custom_zoomcontrol radius_border">-->
+<!--                    <span onclick="zoomIn()"><img src="/img/plus.png" alt="확대"></span>-->
+<!--                    <span onclick="zoomOut()"><img src="/img/minus.png" alt="축소"></span>-->
+<!--                </div>-->
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=50b42248976a05efd824c09d0d575eab"></script>
+</th:block>
+
+</html>

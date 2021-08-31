@@ -22,7 +22,7 @@
         <div class="logoCont">
             <span class="logo"><i class="fas fa-bus"> BKNK</i></span>
         </div>
-        <div>
+        <div class="loginCont">
             <form th:action="@{login}" method="post" th:object="${userEntity}">
                 <div><input type="email" th:field="*{email}" placeholder="email" autofocus required></div>
                 <div><input type="password" th:field="*{pw}" placeholder="password" required> </div>

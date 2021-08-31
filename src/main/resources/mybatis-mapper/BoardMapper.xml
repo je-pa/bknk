@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koreait.bknk.board.BoardMapper">
+<!--게시글 작성-->
+    <insert id="insBoard" useGeneratedKeys="true" keyProperty="iboard" keyColumn="iboard" parameterType="com.koreait.bknk.board.model.BoardDAO">
+        insert into t_board(iuser, title, ctnt, region, place, location_Y, location_X, cntFav, season)
+        values(${iuser}, #{title}, #{ctnt}, ${region}, #{place}, #{location_Y}, #{location_X}, ${cntFav}, ${season})
+    </insert>
+<!--게시글 삭제-->
+    <delete id="delBoard">
+        DELETE A from t_board_cmt A
+        inner join t_board B on A.iboard=B.iboard
+        WHERE A.iboard=${iboard} and B.iuser=${iuser}
+    </delete>
+    <delete id="delBoard2">
+        DELETE A from t_board_img A
+        inner join t_board B on A.iboard=B.iboard
+        WHERE A.iboard=${iboard} and B.iuser=${iuser}
+    </delete>
+    <delete id="delBoard3">
+        DELETE A from t_board_fav A
+        inner join t_board B on A.iboard=B.iboard
+        WHERE A.iboard=${iboard} and B.iuser=${iuser}
+    </delete>
+    <delete id="delBoard4">
+        DELETE from t_board
+        WHERE iboard=${iboard} and iuser=${iuser}
+    </delete>
+    <!--게시글 이미지 저장부분-->
+    <insert id="insBoardImg">
+        insert into t_board_img(iboard, img_addr)
+        values(${iboard}, #{img_addr})
+    </insert>
+    <!--게시글 디테일 정보 불러오기-->
+    <select id="selDetail" resultType="com.koreait.bknk.board.model.BoardDTO">
+        SELECT A.*, B.img_addr, C.nick AS writer, C.mainProfile FROM t_board A
+        INNER JOIN t_user C
+        ON A.iuser=C.iuser
+        LEFT JOIN t_board_img B
+        ON A.iboard=B.iboard
+        WHERE A.iboard=${iboard};
+    </select>
+    <!--게시글 좋아요 최신화 부분-->
+    <update id="updFav">
+        update t_board set cntFav=${selCntFav}
+        <selectKey keyProperty="selCntFav" resultType="integer" order="BEFORE">
+            select count(iboard) from t_board_fav
+            where iboard=${iboard}
+        </selectKey>
+        where iboard=${iboard}
+    </update>
+    <!--유저가 게시글 좋아요 여부 확인-->
+    <select id="chFav" resultType="integer">
+        select count(iboard) from t_board_fav
+        where iuser=${userIuser} and iboard=${iboard}
+    </select>
+    <!--게시글 댓글 불러오기-->
+    <select id="selCmtList" resultType="com.koreait.bknk.board.model.CmtDAO">
+        SELECT A.*, B.nick as writer, B.iuser, B.mainProfile FROM t_board_cmt A
+        INNER JOIN t_user B
+        ON A.iuser=B.iuser
+        WHERE iboard=${iboard}
+        ORDER BY A.regdt DESC;
+    </select>
+    <!--댓글 DB에 입력-->
+    <insert id="insCmt">
+        INSERT INTO t_board_cmt(iuser, iboard, cmt)
+        VALUES(${iuser}, ${iboard}, #{cmt});
+    </insert>
+    <!--댓글 DB에서 수정-->
+    <update id="updCmt">
+        UPDATE t_board_cmt SET cmt=#{cmt}
+        WHERE icmt=${icmt} AND iuser=${iuser}
+    </update>
+    <!--댓글 DB에서 삭제-->
+    <delete id="delCmt">
+        delete from t_board_cmt
+        where iuser=${iuser} and icmt=${icmt}
+    </delete>
+    <!--좋아요 등록-->
+    <insert id="insFav">
+        insert into t_board_fav(iboard, iuser)
+        values(${iboard}, ${iuser})
+    </insert>
+    <!--좋아요 취소-->
+    <delete id="delFav">
+        delete from t_board_fav
+        where iuser=${iuser} and iboard=${iboard}
+    </delete>
+</mapper>
