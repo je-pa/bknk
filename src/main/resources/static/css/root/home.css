@@ -1,2 +1,8 @@
-.homeMainImg { width: 100%; object-fit: cover;}
+.mainImg{ width: 100%; height: 600px; background-color: #8e8e8e; object-fit: cover; }
+.wholeMap{ text-align: center;}
+.hotButton { text-align: center; height: 80px;}
+.hotButton a { width: 160px; color: #5F5F5F;}
 
+.wrap{ padding: 0px; }
+
+/*header{ opacity: 70%;}*/

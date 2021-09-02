@@ -15,3 +15,7 @@
     background: linear-gradient(to right, #ff4692, #84e7f6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent; }
+
+
+.social-container {display: flex; gap: 15px; align-items: center; margin-top: 20px; font-weight: bold;}
+.social-container .wh40 { border-radius: 7px;}

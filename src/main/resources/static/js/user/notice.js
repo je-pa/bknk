@@ -125,6 +125,6 @@ scrollInfinity2(listCont);
 
 const subscription_Button2 = document.createElement('button');
 subscription_Button2.classList.add('subscriptionBtn','btn');
-subscription_Button2.innerHTML = '전체삭제';
+subscription_Button2.innerHTML = '<i class="far fa-trash-alt"> 전체 삭제</i> ';
 subscription_Button2.addEventListener('click', ()=>updLastLogin());
 subscriptionCont_right_header_Const.append(subscription_Button2)
