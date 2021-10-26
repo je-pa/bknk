@@ -1,10 +1,15 @@
 .swiper-container {
-    width: 100%;
+    width: 580px;
+    overflow: hidden;
     /*height: 300px;*/
     flex:1.7;
+    position: relative;
 }
 .swiper-container .swiper-wrapper .swiper-slide{
     display: flex;
+}
+.swiper-container .swiper-pagination{
+    bottom: 10px;
 }
 
 img{width: 100%;}
@@ -38,7 +43,7 @@ img{width: 100%;}
 /*지도 부분*/
 #map_modal{position: absolute; background-color: rgba(0,0,0,0.7); width: 100%; height: 100%; z-index: 100; justify-content: center}
 .map_wrap {position:relative;width:700px;height:500px;}
-.map_wrap > .modal_close_parent{border-bottom:0px solid white; justify-content: flex-end; align-items: flex-end; padding: 0; margin: 0;}
+.map_wrap > .modal_close_parent{border-bottom: 0 solid white; justify-content: flex-end; align-items: flex-end; padding: 0; margin: 0;}
 .map_wrap > .modal_close_parent > i{color: white; font-size: 25px;}
 
 #cmtContainer{flex:1; padding-top: 35px; overflow-y: auto; height: 65%;}
